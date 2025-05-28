@@ -226,7 +226,7 @@ def compute_advantage(data: DataProto, **kwargs):
         data.batch["returns"] = None
         return data
 
-    elif algorithm_type.is_rft():
+    elif algorithm_type.is_rft() or algorithm_type.is_mix():
         adv_estimator = kwargs.get("adv_estimator", None)
         gamma = kwargs.get("gamma", 1.0)
         lam = kwargs.get("lam", 1.0)

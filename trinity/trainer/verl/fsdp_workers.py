@@ -18,6 +18,7 @@ The main entry point to run the PPO algorithm
 import logging
 import os
 import warnings
+from typing import Optional
 
 import psutil
 import torch
@@ -627,7 +628,7 @@ class ActorRolloutRefWorker(Worker):
         self.actor.set_mode(algo_type)
 
     @register(dispatch_mode=Dispatch.DP_COMPUTE_PROTO)
-    def update_actor(self, data: DataProto):
+    def update_actor(self, data: DataProto, data_aux: Optional[DataProto] = None):
         # Support all hardwares
         data = data.to(torch.cuda.current_device())
 
@@ -645,7 +646,7 @@ class ActorRolloutRefWorker(Worker):
             data = self.ulysses_sharding_manager.preprocess_data(data=data)
             # perform training
             with Timer(name="update_policy", logger=None) as timer:
-                metrics = self.actor.update_policy(data=data)
+                metrics = self.actor.update_policy(data=data, data_aux=data_aux)
             delta_time = timer.last
             global_num_tokens = data.meta_info["global_token_num"]
             estimated_flops, promised_flops = self.flops_counter.estimate_flops(

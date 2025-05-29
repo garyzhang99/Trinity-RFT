@@ -311,7 +311,7 @@ class VerlPPOTrainerWrapper(RayPPOTrainer, TrainEngineWrapper):
             return False, self.global_steps - 1
         return True, self.global_steps - 1
 
-    def train_rft_step(self, experiences: Experiences, **kwargs) -> Tuple[bool, int]:
+    def train_rft_step(self, experiences: Experiences, **kwargs) -> Tuple[bool, int]:  # noqa: C901
         metrics = {}
         timing_raw = {}
         auxiliary_experiences = kwargs.get("auxiliary_experiences", None)
@@ -378,7 +378,22 @@ class VerlPPOTrainerWrapper(RayPPOTrainer, TrainEngineWrapper):
                 batch_aux.meta_info[
                     "temperature"
                 ] = self.config.actor_rollout_ref.rollout.temperature
-                batch_aux.meta_info["mu"] = self.config.actor_rollout_ref.actor.get("mu", 0.0)
+
+                import math
+
+                def cosine_decay(global_step, max_decay_steps, alpha=0.1):
+                    if global_step >= max_decay_steps:
+                        return alpha
+                    cosine_decay = 0.5 * (1 + math.cos(math.pi * global_step / max_decay_steps))
+                    decayed = (1 - alpha) * cosine_decay + alpha
+                    return decayed
+
+                # batch_aux.meta_info["mu"] = self.config.actor_rollout_ref.actor.get("mu", 0.0)
+
+                max_decay_steps = self.config.actor_rollout_ref.actor.get("max_decay_steps", 200)
+                alpha = self.config.actor_rollout_ref.actor.get("alpha", 0.1)
+                decay_mu = cosine_decay(self.global_steps, max_decay_steps, alpha)
+                batch_aux.meta_info["mu"] = decay_mu
             else:
                 batch_aux = None
 

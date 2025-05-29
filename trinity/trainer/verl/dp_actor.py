@@ -523,6 +523,8 @@ class DataParallelPPOActor(BasePPOActor):
                         loss = policy_loss * (len(data) / self.config.ppo_mini_batch_size)
                     else:
                         loss = policy_loss / self.gradient_accumulation
+                    if self.algorithm_type.is_mix():
+                        loss = loss * (1.0 - mu)
                     loss.backward()
 
                     if self.algorithm_type.is_rft() or self.algorithm_type.is_mix():

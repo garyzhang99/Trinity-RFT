@@ -644,6 +644,7 @@ class ActorRolloutRefWorker(Worker):
 
         with self.ulysses_sharding_manager:
             data = self.ulysses_sharding_manager.preprocess_data(data=data)
+            data_aux = self.ulysses_sharding_manager.preprocess_data(data=data_aux)
             # perform training
             with Timer(name="update_policy", logger=None) as timer:
                 metrics = self.actor.update_policy(data=data, data_aux=data_aux)

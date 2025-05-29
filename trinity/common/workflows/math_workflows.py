@@ -92,7 +92,7 @@ class MathBasedModelWorkflow(BaseModelWorkflow):
             task.reward_fn = MathRewardFn
         else:
             have_think_pattern = (
-                "</think>" in task.format_args.system_prompt
+                "<think>" in task.format_args.system_prompt
                 and "</think>" in task.format_args.system_prompt
             )
             task.reward_fn = partial(MathBoxedRewardFn, have_think_pattern=have_think_pattern)

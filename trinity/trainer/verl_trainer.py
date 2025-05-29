@@ -448,7 +448,11 @@ class VerlPPOTrainerWrapper(RayPPOTrainer, TrainEngineWrapper):
                 # add sft experiences to batch
                 # update actor
                 with _timer("update_actor", timing_raw):
-                    actor_output = self.actor_rollout_wg.update_actor(batch, batch_aux)
+                    if batch_aux is not None:
+                        actor_output = self.actor_rollout_wg.update_actor(batch, batch_aux)
+                    else:
+                        actor_output = self.actor_rollout_wg.update_actor(batch)
+                    # actor_output = self.actor_rollout_wg.update_actor(batch, batch_aux)
                     # TODO add send weight explorer
                 actor_output_metrics = reduce_metrics(actor_output.meta_info["metrics"])
                 metrics.update(actor_output_metrics)

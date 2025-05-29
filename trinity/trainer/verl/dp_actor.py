@@ -577,15 +577,15 @@ class DataParallelPPOActor(BasePPOActor):
                         _, log_prob_sft = self._forward_micro_batch(
                             micro_batch=data_aux, temperature=temperature
                         )
-                        sft_loss = core_algos.compute_policy_loss_sft(
+                        sft_loss, pg_clipfrac, ppo_kl = core_algos.compute_policy_loss_sft(
                             log_prob=log_prob_sft, eos_mask=response_mask
                         )
 
                         (mu * scale * sft_loss).backward()
 
                         data = {
-                            "sft/loss": sft_loss.detach().item(),
-                            "loss_mean": loss.detach().item()
+                            "actor/sft_loss": sft_loss.detach().item(),
+                            "actor/loss_mean": loss.detach().item()
                             + mu * scale * sft_loss.detach().item(),
                         }
                         append_to_dict(metrics, data)

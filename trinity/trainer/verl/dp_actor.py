@@ -589,6 +589,7 @@ class DataParallelPPOActor(BasePPOActor):
                             "actor/sft_loss": sft_loss.detach().item(),
                             "actor/loss_mean": loss.detach().item()
                             + mu * scale * sft_loss.detach().item(),
+                            "actor/mu": mu,
                         }
                         append_to_dict(metrics, data)
 

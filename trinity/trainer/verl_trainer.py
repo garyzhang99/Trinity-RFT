@@ -381,18 +381,18 @@ class VerlPPOTrainerWrapper(RayPPOTrainer, TrainEngineWrapper):
 
                 import math
 
-                def cosine_decay(global_step, max_decay_steps, alpha=0.1):
-                    if global_step >= max_decay_steps:
+                def cosine_decay(global_step, mu_decay_steps, alpha=0.1):
+                    if global_step >= mu_decay_steps:
                         return alpha
-                    cosine_decay = 0.5 * (1 + math.cos(math.pi * global_step / max_decay_steps))
+                    cosine_decay = 0.5 * (1 + math.cos(math.pi * global_step / mu_decay_steps))
                     decayed = (1 - alpha) * cosine_decay + alpha
                     return decayed
 
                 # batch_aux.meta_info["mu"] = self.config.actor_rollout_ref.actor.get("mu", 0.0)
 
-                max_decay_steps = self.config.actor_rollout_ref.actor.get("max_decay_steps", 200)
-                alpha = self.config.actor_rollout_ref.actor.get("alpha", 0.1)
-                decay_mu = cosine_decay(self.global_steps, max_decay_steps, alpha)
+                mu_decay_steps = self.config.actor_rollout_ref.actor.get("mu_decay_steps", 200)
+                alpha = self.config.actor_rollout_ref.actor.get("mu_alpha", 0.1)
+                decay_mu = cosine_decay(self.global_steps, mu_decay_steps, alpha)
                 batch_aux.meta_info["mu"] = decay_mu
             else:
                 batch_aux = None

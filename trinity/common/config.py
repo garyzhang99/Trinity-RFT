@@ -177,6 +177,8 @@ class AlgorithmConfig:
     lam: Optional[float] = None
     # TODO: add more algorithm params here
     mu: float = 0.1  # for mix training
+    mu_decay_steps = 200  # for mix training
+    mu_alpha = 0.1  # for mix training
 
 
 @dataclass

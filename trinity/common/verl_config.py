@@ -84,6 +84,9 @@ class Actor:
     opmd_baseline: str = "mean"  # mean / logavgexp, applicable to opmd
     use_uid: bool = False  # True / False, applicable to pairwise_opmd
     mu: float = 0.1  # for mix training
+    mu_alpha: float = 0.1  # for mix training
+    mu_beta: float = 0.2  # for mix training
+    mu_decay_steps: int = 200  # for mix training
 
 
 @dataclass
@@ -327,6 +330,9 @@ class veRLConfig:
             logger.info("Using GRPO `adv_estimator` for MIX")
             self.algorithm.adv_estimator = AdvantageEstimator.GRPO.value
             self.actor_rollout_ref.actor.mu = config.algorithm.mu
+            self.actor_rollout_ref.actor.mu_alpha = config.algorithm.mu_alpha
+            self.actor_rollout_ref.actor.mu_beta = config.algorithm.mu_beta
+            self.actor_rollout_ref.actor.mu_decay_steps = config.algorithm.mu_decay_steps
 
         if self.actor_rollout_ref.actor.algorithm_type.is_dpo():  # for DPO
             if not self.actor_rollout_ref.actor.use_kl_loss:

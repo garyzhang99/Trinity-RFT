@@ -176,9 +176,10 @@ class AlgorithmConfig:
     gamma: Optional[float] = None
     lam: Optional[float] = None
     # TODO: add more algorithm params here
-    mu: float = 0.1  # for mix training
-    mu_decay_steps = 200  # for mix training
-    mu_alpha = 0.1  # for mix training
+    mu: Optional[float] = 0.1  # for mix training
+    mu_decay_steps: Optional[int] = 200  # for mix training
+    mu_alpha: Optional[float] = 0.1  # for mix training
+    mu_beta: Optional[float] = 0.2  # for mix training
 
 
 @dataclass

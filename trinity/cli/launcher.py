@@ -93,6 +93,14 @@ def both(config: Config) -> None:
     # sync weight before training start
     ray.get([explorer.sync_weight.remote(), trainer.sync_weight.remote()])
 
+    try:
+        ray.get(explorer.eval.remote())
+        logger.info("Evaluation finished.")
+    except Exception as e:
+        logger.error(e)
+        logger.error("Evaluation failed.")
+        raise e
+
     if (
         config.buffer.trainer_input.sft_warmup_steps > 1
     ):  # TODO: sft_warmup_steps>0 activates the sft_data_buffer, but now we do not need warmup

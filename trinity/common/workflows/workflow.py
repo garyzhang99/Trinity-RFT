@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import math
 from abc import ABC, abstractmethod
 from dataclasses import asdict, dataclass, field
 from functools import partial
@@ -22,6 +23,40 @@ logger = get_logger(__name__)
 
 
 WORKFLOWS = Registry("workflows")
+
+
+def cosine_decay_reward(reward, length, max_length=16200, min_length=8000):
+    """
+    对大于等于1的reward进行cosine decay
+
+    参数:
+    reward (float): 原始奖励值
+    length (int): 当前length
+    max_length (int): 最大步数，默认16000
+
+    返回:
+    float: 经过cosine decay后的奖励值
+    """
+    # 如果步数超过最大长度，返回更大的负数
+    if length >= max_length:
+        return -1.0
+
+    if length <= min_length:
+        return reward
+
+    length -= min_length
+
+    # 如果reward小于1，直接返回原值
+    if reward <= 0.0:
+        return reward
+
+    # 计算cosine decay系数
+    cosine_decay = 0.5 * (1 + math.cos(math.pi * length / max_length))
+
+    # 对大于等于1的reward进行decay
+    decayed_reward = reward * cosine_decay
+
+    return decayed_reward
 
 
 @dataclass
@@ -219,6 +254,7 @@ class SimpleWorkflow(Workflow):
                 response.metrics.update(reward)
                 reward = sum(reward.values())
             response.reward = reward
+            response.reward = cosine_decay_reward(response.reward, len(response.tokens))
         return responses
 
 
@@ -230,9 +266,9 @@ class BaseModelWorkflow(SimpleWorkflow):
         prompt_text = ""
         if self.system_prompt:
             prompt_text += self.system_prompt
-            prompt_text += "\nTask:\n" + self.task_desc + "\nResponse:\n"
+            prompt_text += "\nUser:\n" + self.task_desc + "\nAssistant:\n"
         else:
-            prompt_text += "\nTask:\n" + self.task_desc + "\nResponse:\n"
+            prompt_text += "\nUser:\n" + self.task_desc + "\nAssistant:\n"
         return prompt_text
 
     def run(self) -> List[Experience]:

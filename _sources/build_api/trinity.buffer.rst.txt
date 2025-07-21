@@ -37,10 +37,26 @@ trinity.buffer.buffer\_writer module
    :undoc-members:
    :show-inheritance:
 
+trinity.buffer.priority\_queue module
+-------------------------------------
+
+.. automodule:: trinity.buffer.priority_queue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 trinity.buffer.queue module
 ---------------------------
 
 .. automodule:: trinity.buffer.queue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+trinity.buffer.ray\_wrapper module
+----------------------------------
+
+.. automodule:: trinity.buffer.ray_wrapper
    :members:
    :undoc-members:
    :show-inheritance:

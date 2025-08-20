@@ -47,7 +47,9 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorial/example_reasoning_basic.html">Quick Start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial/example_reasoning_advanced.html">Off-Policy RFT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial/example_async_mode.html">Asynchronous RFT</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial/example_multi_turn.html">Multi-Turn RFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/example_multi_turn.html">Concatenated Multi-Turn RFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/example_step_wise.html">General Multi-Step RFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/example_react.html">Multi-Step ReAct</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial/example_dpo.html">Offline DPO and SFT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial/example_data_functionalities.html">Data Processing</a></li>
 </ul>
@@ -56,6 +58,7 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorial/trinity_programming_guide.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial/trinity_configs.html">Configuration Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial/example_mix_algo.html">Algorithm Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/synchronizer.html">Synchronizer in Trinity-RFT</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">FAQ</span></p>
 <ul>
@@ -120,6 +123,21 @@
        <td></td>
        <td>&#160;&#160;&#160;
        <a href="build_api/trinity.algorithm.add_strategy.html#module-trinity.algorithm.add_strategy.add_strategy"><code class="xref">trinity.algorithm.add_strategy.add_strategy</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="build_api/trinity.algorithm.add_strategy.html#module-trinity.algorithm.add_strategy.correct_bias_add_strategy"><code class="xref">trinity.algorithm.add_strategy.correct_bias_add_strategy</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="build_api/trinity.algorithm.add_strategy.html#module-trinity.algorithm.add_strategy.duplicate_add_strategy"><code class="xref">trinity.algorithm.add_strategy.duplicate_add_strategy</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="build_api/trinity.algorithm.add_strategy.html#module-trinity.algorithm.add_strategy.step_wise_add_strategy"><code class="xref">trinity.algorithm.add_strategy.step_wise_add_strategy</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
@@ -204,7 +222,17 @@
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
+       <a href="build_api/trinity.algorithm.policy_loss_fn.html#module-trinity.algorithm.policy_loss_fn.chord_policy_loss"><code class="xref">trinity.algorithm.policy_loss_fn.chord_policy_loss</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
        <a href="build_api/trinity.algorithm.policy_loss_fn.html#module-trinity.algorithm.policy_loss_fn.dpo_loss"><code class="xref">trinity.algorithm.policy_loss_fn.dpo_loss</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="build_api/trinity.algorithm.policy_loss_fn.html#module-trinity.algorithm.policy_loss_fn.gspo_policy_loss"><code class="xref">trinity.algorithm.policy_loss_fn.gspo_policy_loss</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
@@ -464,6 +492,11 @@
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
+       <a href="build_api/trinity.common.workflows.html#module-trinity.common.workflows.eval_workflow"><code class="xref">trinity.common.workflows.eval_workflow</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
        <a href="build_api/trinity.common.workflows.html#module-trinity.common.workflows.math_rm_workflow"><code class="xref">trinity.common.workflows.math_rm_workflow</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
@@ -509,12 +542,27 @@
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
+       <a href="build_api/trinity.manager.config_registry.html#module-trinity.manager.config_registry"><code class="xref">trinity.manager.config_registry</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
        <a href="build_api/trinity.manager.config_registry.html#module-trinity.manager.config_registry.algorithm_config_manager"><code class="xref">trinity.manager.config_registry.algorithm_config_manager</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
+       <a href="build_api/trinity.manager.config_registry.html#module-trinity.manager.config_registry.buffer_config_manager"><code class="xref">trinity.manager.config_registry.buffer_config_manager</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
        <a href="build_api/trinity.manager.config_registry.html#module-trinity.manager.config_registry.config_registry"><code class="xref">trinity.manager.config_registry.config_registry</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="build_api/trinity.manager.config_registry.html#module-trinity.manager.config_registry.explorer_config_manager"><code class="xref">trinity.manager.config_registry.explorer_config_manager</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
@@ -530,6 +578,11 @@
        <td></td>
        <td>&#160;&#160;&#160;
        <a href="build_api/trinity.manager.html#module-trinity.manager.manager"><code class="xref">trinity.manager.manager</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="build_api/trinity.manager.html#module-trinity.manager.synchronizer"><code class="xref">trinity.manager.synchronizer</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
@@ -554,17 +607,22 @@
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="build_api/trinity.trainer.verl.html#module-trinity.trainer.verl.converter"><code class="xref">trinity.trainer.verl.converter</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
        <a href="build_api/trinity.trainer.verl.html#module-trinity.trainer.verl.dp_actor"><code class="xref">trinity.trainer.verl.dp_actor</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
+       <a href="build_api/trinity.trainer.verl.html#module-trinity.trainer.verl.fsdp_checkpoint_manager"><code class="xref">trinity.trainer.verl.fsdp_checkpoint_manager</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
        <a href="build_api/trinity.trainer.verl.html#module-trinity.trainer.verl.fsdp_workers"><code class="xref">trinity.trainer.verl.fsdp_workers</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="build_api/trinity.trainer.verl.html#module-trinity.trainer.verl.utils"><code class="xref">trinity.trainer.verl.utils</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
@@ -595,6 +653,11 @@
        <td></td>
        <td>&#160;&#160;&#160;
        <a href="build_api/trinity.utils.html#module-trinity.utils.log"><code class="xref">trinity.utils.log</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="build_api/trinity.utils.html#module-trinity.utils.math_eval_utils"><code class="xref">trinity.utils.math_eval_utils</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>

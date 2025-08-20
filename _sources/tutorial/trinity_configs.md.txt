@@ -129,14 +129,14 @@ Defines the model paths and token limits.
 model:
   model_path: /PATH/TO/MODEL/
   critic_model_path: ''
-  max_prompt_tokens: 4096
   max_response_tokens: 16384
+  max_model_len: 20480
 ```
 
 - `model_path`: Path to the model being trained.
 - `critic_model_path`: Optional path to a separate critic model. If empty, defaults to `model_path`.
-- `max_prompt_tokens`: Maximum number of tokens allowed in input prompts.
 - `max_response_tokens`: Maximum number of tokens allowed in generated responses.
+- `max_model_len`: Maximum number of tokens in a sequence.
 
 ---
 
@@ -162,6 +162,7 @@ Configures the data buffers used by the explorer and trainer.
 ```yaml
 buffer:
   batch_size: 32
+  train_batch_size: 256
   total_epochs: 100
 
   explorer_input:
@@ -184,6 +185,7 @@ buffer:
 ```
 
 - `batch_size`: Number of tasks used per training step. *Please do not multiply this value by the `algorithm.repeat_times` manually*.
+- `train_batch_size`: Number of experiences used per training step. Defaults to `batch_size` * `algorithm.repeat_times`.
 - `total_epochs`: Total number of training epochs.
 - `total_steps`: Optional. The total number of training steps. If specified, `total_epochs` will be ignored.
 
@@ -213,6 +215,7 @@ buffer:
       storage_type: file
       path: /PATH/TO/DATA
       split: test
+      repeat_times: 1
       format:
         prompt_key: 'question'
         response_key: 'answer'
@@ -238,6 +241,7 @@ The configuration for each task dataset is defined as follows:
   - For `sql` storage type, the path points to the sqlite database file.
 - `subset_name`: The subset name of the task dataset. Default is `None`.
 - `split`: The split of the task dataset. Default is `train`.
+- `repeat_times`: The number of rollouts generated for a task. If not set, it will be automatically set to `algorithm.repeat_times` for `taskset`, and `1` for `eval_tasksets`.
 - `format`: Defines keys for prompts and responses in the dataset.
   - `prompt_key`: Specifies which column in the dataset contains the prompt data.
   - `response_key`: Specifies which column in the dataset contains the response data.
@@ -433,13 +437,15 @@ actor_rollout_ref:
     override_config: { }
     enable_gradient_checkpointing: True
     use_remove_padding: True
+    use_fused_kernels: False
+    fused_kernel_options:
+      impl_backend: None
   actor:
     strategy: fsdp  # This is for backward-compatibility
-    ppo_mini_batch_size: 128
     # ppo_micro_batch_size: 8 # will be deprecated, use ppo_micro_batch_size_per_gpu
     ppo_micro_batch_size_per_gpu: 4
     use_dynamic_bsz: True
-    ppo_max_token_len_per_gpu: 16384 # n * ${data.max_prompt_length} + ${data.max_response_length}
+    ppo_max_token_len_per_gpu: 16384 # n * ${data.max_model_len}
     grad_clip: 1.0
     ppo_epochs: 1
     shuffle: False
@@ -472,7 +478,7 @@ actor_rollout_ref:
       fsdp_size: -1
       forward_prefetch: False
     # log_prob_micro_batch_size: 4 # will be deprecated, use log_prob_micro_batch_size_per_gpu
-    log_prob_micro_batch_size_per_gpu: 8
+    log_prob_micro_batch_size_per_gpu: 4
     log_prob_use_dynamic_bsz: ${actor_rollout_ref.actor.use_dynamic_bsz}
     log_prob_max_token_len_per_gpu: ${actor_rollout_ref.actor.ppo_max_token_len_per_gpu}
     ulysses_sequence_parallel_size: ${actor_rollout_ref.actor.ulysses_sequence_parallel_size} # sp size
@@ -500,7 +506,6 @@ critic:
         min_num_params: 0
       fsdp_size: -1
       forward_prefetch: False
-  ppo_mini_batch_size: ${actor_rollout_ref.actor.ppo_mini_batch_size}
   ppo_micro_batch_size_per_gpu: 8
   forward_micro_batch_size_per_gpu: ${critic.ppo_micro_batch_size_per_gpu}
   use_dynamic_bsz: ${actor_rollout_ref.actor.use_dynamic_bsz}
@@ -530,6 +535,8 @@ trainer:
 
 - `actor_rollout_ref.model.enable_gradient_checkpointing`: Whether to enable gradient checkpointing, which will reduce GPU memory usage.
 - `actor_rollout_ref.model.use_remove_padding`: Whether to remove pad tokens, which will reduce training time.
+- `actor_rollout_ref.model.use_fused_kernels`: Whether to use custom fused kernels (e.g., FlashAttention, fused MLP).
+- `actor_rollout_ref.model.fused_kernel_options.impl_backend`: Implementation backend for fused kernels. If use_fused_kernels is true, this will be used. Options: "triton" or "torch".
 - `actor_rollout_ref.actor.use_dynamic_bsz`: Whether to reorganize the batch data, specifically to splice the shorter data to reduce the batch size in the actual training process.
 - `actor_rollout_ref.actor.ppo_micro_batch_size_per_gpu`: Batch size for one GPU in one forward pass.
 - `actor_rollout_ref.actor.ulysses_sequence_parallel_size`: Ulysses sequence parallel size.

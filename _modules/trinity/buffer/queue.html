@@ -44,7 +44,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial/example_reasoning_basic.html">Quick Start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial/example_reasoning_advanced.html">Off-Policy RFT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial/example_async_mode.html">Asynchronous RFT</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/example_multi_turn.html">Multi-Turn RFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/example_multi_turn.html">Concatenated Multi-Turn RFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/example_step_wise.html">General Multi-Step RFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/example_react.html">Multi-Step ReAct</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial/example_dpo.html">Offline DPO and SFT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial/example_data_functionalities.html">Data Processing</a></li>
 </ul>
@@ -53,6 +55,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial/trinity_programming_guide.html">Developer Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial/trinity_configs.html">Configuration Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial/example_mix_algo.html">Algorithm Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/synchronizer.html">Synchronizer in Trinity-RFT</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">FAQ</span></p>
 <ul>
@@ -160,7 +163,7 @@
         <span class="k">if</span> <span class="n">storage_config</span><span class="o">.</span><span class="n">use_priority_queue</span><span class="p">:</span>
             <span class="n">reuse_cooldown_time</span> <span class="o">=</span> <span class="n">storage_config</span><span class="o">.</span><span class="n">reuse_cooldown_time</span>
             <span class="n">replay_buffer_kwargs</span> <span class="o">=</span> <span class="n">storage_config</span><span class="o">.</span><span class="n">replay_buffer_kwargs</span>
-            <span class="n">capacity</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">storage_config</span><span class="o">.</span><span class="n">capacity</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">read_batch_size</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">capacity</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">storage_config</span><span class="o">.</span><span class="n">capacity</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">train_batch_size</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Using AsyncPriorityQueue with capacity </span><span class="si">{</span><span class="n">capacity</span><span class="si">}</span><span class="s2">, reuse_cooldown_time </span><span class="si">{</span><span class="n">reuse_cooldown_time</span><span class="si">}</span><span class="s2">.&quot;</span>
             <span class="p">)</span>
@@ -191,7 +194,11 @@
 <a class="viewcode-back" href="../../../build_api/trinity.buffer.html#trinity.buffer.queue.AsyncQueue.close">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Close the queue.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_closed</span> <span class="o">=</span> <span class="kc">True</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_closed</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">getter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getters</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">getter</span><span class="o">.</span><span class="n">done</span><span class="p">():</span>
+                <span class="n">getter</span><span class="o">.</span><span class="n">set_exception</span><span class="p">(</span><span class="ne">StopAsyncIteration</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_getters</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="AsyncQueue.stopped">

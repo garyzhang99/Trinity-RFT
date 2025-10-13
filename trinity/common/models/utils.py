@@ -25,6 +25,7 @@ def tokenize_and_mask_messages_hf(
         messages (List[dict]): Messages with `role` and `content` fields.
         tools (Optional[List[dict]]): The list of tool dictionaries.
         chat_template (str): The chat template with `{% generation %}` symbol.
+        enable_thinking (bool): Whether to enable thinking. We add this to support hybrid-thinking models such as Qwen3.
 
     Returns:
         `torch.Tensor`: The token_ids (sequence_length)
@@ -63,6 +64,7 @@ def tokenize_and_mask_messages_default(
         messages (List[dict]): Messages with `role` and `content` fields.
         tools (Optional[List[dict]]): The list of tool dictionaries.
         chat_template (str): The chat template with `{% generation %}` symbol.
+        enable_thinking (bool): Whether to enable thinking. We add this to support hybrid-thinking models such as Qwen3.
 
     Returns:
         `torch.Tensor`: The token_ids (sequence_length)

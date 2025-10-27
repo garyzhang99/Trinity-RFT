@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>参数配置指南 &#8212; Trinity-RFT 0.3.1.dev0 文档</title>
+    <title>参数配置指南 &#8212; Trinity-RFT 0.4.0.dev0 文档</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=855ea54a"></script>
+    <script src="../_static/documentation_options.js?v=09f53066"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -137,8 +137,8 @@
       
     
     
-    <img src="../_static/logo.svg" class="logo__image only-light" alt="Trinity-RFT 0.3.1.dev0 文档 - Home"/>
-    <script>document.write(`<img src="../_static/logo.svg" class="logo__image only-dark" alt="Trinity-RFT 0.3.1.dev0 文档 - Home"/>`);</script>
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="Trinity-RFT 0.4.0.dev0 文档 - Home"/>
+    <script>document.write(`<img src="../_static/logo.svg" class="logo__image only-dark" alt="Trinity-RFT 0.4.0.dev0 文档 - Home"/>`);</script>
   
   
 </a></div>
@@ -231,6 +231,11 @@
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.buffer.schema.sql_schema.html">trinity.buffer.schema.sql_schema module</a></li>
 </ul>
 </details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../build_api/trinity.buffer.selector.html">trinity.buffer.selector package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.buffer.selector.difficulty_estimator.html">trinity.buffer.selector.difficulty_estimator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.buffer.selector.selector.html">trinity.buffer.selector.selector module</a></li>
+</ul>
+</details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../build_api/trinity.buffer.storage.html">trinity.buffer.storage package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.buffer.storage.file.html">trinity.buffer.storage.file module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.buffer.storage.queue.html">trinity.buffer.storage.queue module</a></li>
@@ -246,6 +251,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.buffer.buffer.html">trinity.buffer.buffer module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.buffer.buffer_reader.html">trinity.buffer.buffer_reader module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.buffer.buffer_writer.html">trinity.buffer.buffer_writer module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.buffer.task_scheduler.html">trinity.buffer.task_scheduler module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.buffer.utils.html">trinity.buffer.utils module</a></li>
 </ul>
 </details></li>
@@ -364,6 +370,7 @@
 </details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../build_api/trinity.common.workflows.html">trinity.common.workflows package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.workflows.agentscope.html">trinity.common.workflows.agentscope package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.workflows.agentscope_workflow.html">trinity.common.workflows.agentscope_workflow module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.workflows.customized_math_workflows.html">trinity.common.workflows.customized_math_workflows module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.workflows.customized_toolcall_workflows.html">trinity.common.workflows.customized_toolcall_workflows module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.workflows.eval_workflow.html">trinity.common.workflows.eval_workflow module</a></li>
@@ -710,7 +717,9 @@ document.write(`
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">algorithm</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">algorithm_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">grpo</span>
 <span class="w">  </span><span class="nt">repeat_times</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
-
+<span class="w">  </span><span class="nt">optimizer</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">lr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-6</span>
+<span class="w">    </span><span class="nt">warmup_style</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">constant</span>
 <span class="w">  </span><span class="c1"># 以下参数为可选</span>
 <span class="w">  </span><span class="c1"># 若未指定，将根据 `algorithm_type` 自动设置</span>
 <span class="w">  </span><span class="nt">sample_strategy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;default&quot;</span>
@@ -723,6 +732,12 @@ document.write(`
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">algorithm_type</span></code>: 强化学习算法类型。支持类型：<code class="docutils literal notranslate"><span class="pre">ppo</span></code>、<code class="docutils literal notranslate"><span class="pre">grpo</span></code>、<code class="docutils literal notranslate"><span class="pre">opmd</span></code>、<code class="docutils literal notranslate"><span class="pre">dpo</span></code>、<code class="docutils literal notranslate"><span class="pre">sft</span></code>、<code class="docutils literal notranslate"><span class="pre">mix</span></code>。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">repeat_times</span></code>: 每个任务重复的次数。默认为 <code class="docutils literal notranslate"><span class="pre">1</span></code>。在 <code class="docutils literal notranslate"><span class="pre">dpo</span></code> 中自动设为 <code class="docutils literal notranslate"><span class="pre">2</span></code>。某些算法如 GRPO 和 OPMD 要求 <code class="docutils literal notranslate"><span class="pre">repeat_times</span></code> &gt; 1。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">optimizer</span></code>: Actor 优化器的参数。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">lr</span></code>: 优化器的学习率。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">warmup_style</span></code>: 学习率的预热策略。</p></li>
+</ul>
+</li>
 <li><p><code class="docutils literal notranslate"><span class="pre">sample_strategy</span></code>: 从 experience buffer 加载 experience 时使用的采样策略。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">advantage_fn</span></code>: 用于计算优势值的函数。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">kl_penalty_fn</span></code>: 用于在奖励中计算 KL 惩罚的函数。</p></li>
@@ -786,7 +801,7 @@ document.write(`
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">model_path</span></code>: 被训练模型的路径。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">critic_model_path</span></code>: 可选的独立 critic 模型路径。若为空，则默认为 <code class="docutils literal notranslate"><span class="pre">model_path</span></code>。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">max_model_len</span></code>: 该模型所支持的单个序列最大 token 数。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_model_len</span></code>: 表示模型所支持的单个序列最大 token 数。如未指定，系统会尝试将其设为 <code class="docutils literal notranslate"><span class="pre">max_prompt_tokens</span></code> + <code class="docutils literal notranslate"><span class="pre">max_response_tokens</span></code>。但前提是这两个值都必须已设置，否则将引发错误。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">max_prompt_tokens</span></code>: 输入 prompt 中允许的最大 token 数。仅对 <code class="docutils literal notranslate"><span class="pre">InferenceModel</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">chat</span></code> 和 <code class="docutils literal notranslate"><span class="pre">generate</span></code> 方法生效。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">max_response_tokens</span></code>: 模型生成的回复中允许的最大 token 数。仅对 <code class="docutils literal notranslate"><span class="pre">InferenceModel</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">chat</span></code> 和 <code class="docutils literal notranslate"><span class="pre">generate</span></code> 方法生效。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">min_response_tokens</span></code>: 模型生成的回复中允许的最小 token 数。仅对 <code class="docutils literal notranslate"><span class="pre">InferenceModel</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">chat</span></code> 和 <code class="docutils literal notranslate"><span class="pre">generate</span></code> 方法生效。</p></li>
@@ -832,9 +847,6 @@ document.write(`
 <span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">      </span><span class="nt">buffer_2</span><span class="p">:</span>
 <span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-
-<span class="w">  </span><span class="nt">default_workflow_type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;math_workflow&#39;</span>
-<span class="w">  </span><span class="nt">default_reward_fn_type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;countdown_reward&#39;</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -848,6 +860,9 @@ document.write(`
 <p>定义 explorer 用于训练和评估的数据集。</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">buffer</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">explorer_input</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">default_workflow_type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;math_workflow&#39;</span>
+<span class="w">    </span><span class="nt">default_eval_workflow_type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;math_workflow&#39;</span>
+<span class="w">    </span><span class="nt">default_reward_fn_type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;countdown_reward&#39;</span>
 <span class="w">    </span><span class="nt">taskset</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">countdown_train</span>
 <span class="w">      </span><span class="nt">storage_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">file</span>
@@ -873,14 +888,15 @@ document.write(`
 <span class="w">        </span><span class="nt">response_key</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;answer&#39;</span>
 <span class="w">      </span><span class="nt">rollout_args</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">temperature</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span>
-<span class="w">      </span><span class="nt">default_workflow_type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;math_workflow&#39;</span>
-<span class="w">      </span><span class="nt">default_reward_fn_type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;countdown_reward&#39;</span>
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">buffer.explorer_input.taskset</span></code>: 用于训练探索策略的任务数据集。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">buffer.explorer_input.eval_taskset</span></code>: 用于评估的任务数据集列表。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">buffer.explorer_input.eval_tasksets</span></code>: 用于评测的任务数据集列表。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">buffer.explorer_input.default_workflow_type</span></code>: 若未在数据集级别指定，则为所有任务数据集设置默认的工作流类型。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">buffer.explorer_input.default_eval_workflow_type</span></code>: 若未在数据集级别指定，则为所有评测任务数据集设置默认的工作流类型。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">buffer.explorer_input.default_reward_fn_type</span></code>: 若未在数据集级别指定，则为所有任务数据集设置默认的奖励类型。</p></li>
 </ul>
 <p>每个任务数据集的配置定义如下：</p>
 <ul class="simple">
@@ -888,19 +904,17 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">storage_type</span></code>: 数据集的存储方式。选项：<code class="docutils literal notranslate"><span class="pre">file</span></code>、<code class="docutils literal notranslate"><span class="pre">queue</span></code>、<code class="docutils literal notranslate"><span class="pre">sql</span></code>。</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">file</span></code>: 数据集存储在 <code class="docutils literal notranslate"><span class="pre">jsonl</span></code>/<code class="docutils literal notranslate"><span class="pre">parquet</span></code> 文件中。数据文件组织需符合 HuggingFace 标准。<em>建议大多数情况下使用此存储类型。</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">queue</span></code>: 数据集存储在队列中。队列是一个简单的 FIFO 队列，用于存储任务数据集。<em>除非你明确了解其用途，否则不要为此类数据集使用此类型。</em></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">sql</span></code>: 数据集存储在 SQL 数据库中。<em>此类型尚不稳定，将在未来版本中优化。</em></p></li>
 </ul>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">path</span></code>: 任务数据集的路径。</p>
 <ul>
 <li><p>对于 <code class="docutils literal notranslate"><span class="pre">file</span></code> 类型，路径指向包含任务数据集文件的目录。</p></li>
-<li><p>对于 <code class="docutils literal notranslate"><span class="pre">queue</span></code> 类型，路径为可选。可通过在此指定 sqlite 数据库路径来备份队列数据。</p></li>
 <li><p>对于 <code class="docutils literal notranslate"><span class="pre">sql</span></code> 类型，路径指向 sqlite 数据库文件。</p></li>
 </ul>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">subset_name</span></code>: 任务数据集的子集名称。默认为 <code class="docutils literal notranslate"><span class="pre">None</span></code>。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">split</span></code>: 任务数据集的划分。默认为 <code class="docutils literal notranslate"><span class="pre">train</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">subset_name</span></code>: 任务数据集的子集名称，对应 huggingface datasets <code class="docutils literal notranslate"><span class="pre">load_dataset</span></code> 函数中的 <code class="docutils literal notranslate"><span class="pre">name</span></code> 参数。默认为 <code class="docutils literal notranslate"><span class="pre">None</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">split</span></code>: 任务数据集的划分。对应 huggingface datasets <code class="docutils literal notranslate"><span class="pre">load_dataset</span></code> 函数中的 <code class="docutils literal notranslate"><span class="pre">split</span></code> 参数。默认为 <code class="docutils literal notranslate"><span class="pre">train</span></code>。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">repeat_times</span></code>: 为一个任务生成的 rollout 数量。若未设置，则自动设为 <code class="docutils literal notranslate"><span class="pre">algorithm.repeat_times</span></code>（<code class="docutils literal notranslate"><span class="pre">taskset</span></code>）或 <code class="docutils literal notranslate"><span class="pre">1</span></code>（<code class="docutils literal notranslate"><span class="pre">eval_tasksets</span></code>）。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">rollout_args</span></code>: rollout 参数。</p>
 <ul>
@@ -954,7 +968,7 @@ document.write(`
 <li><p>对于 <code class="docutils literal notranslate"><span class="pre">sql</span></code> 类型，路径指向 SQLite 数据库文件。</p></li>
 </ul>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">format</span></code>: 定义数据集中 prompt 和 response 的键。</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">format</span></code>: 主要针对 SFT 和 DPO 算法的数据集，用于规范化提取的数据。</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">prompt_type</span></code>: 指定数据集中 prompt 的类型。目前支持 <code class="docutils literal notranslate"><span class="pre">plaintext</span></code>、<code class="docutils literal notranslate"><span class="pre">messages</span></code>。</p>
 <ul>
@@ -975,8 +989,14 @@ document.write(`
 </ul>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">max_read_timeout</span></code>: 读取新 experience 数据的最大等待时间（秒）。若超时，则直接返回不完整批次。仅当 <code class="docutils literal notranslate"><span class="pre">storage_type</span></code> 为 <code class="docutils literal notranslate"><span class="pre">queue</span></code> 时生效。默认为 1800 秒（30 分钟）。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">use_priority_queue</span></code>: 仅当 <code class="docutils literal notranslate"><span class="pre">storage_type</span></code> 为 <code class="docutils literal notranslate"><span class="pre">queue</span></code> 时生效。若设为 <code class="docutils literal notranslate"><span class="pre">True</span></code>，队列为优先级队列，允许优先处理某些 experience。默认为 <code class="docutils literal notranslate"><span class="pre">False</span></code>。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">reuse_cooldown_time</span></code>: 仅当 <code class="docutils literal notranslate"><span class="pre">storage_type</span></code> 为 <code class="docutils literal notranslate"><span class="pre">queue</span></code> 且 <code class="docutils literal notranslate"><span class="pre">use_priority_queue</span></code> 为 <code class="docutils literal notranslate"><span class="pre">True</span></code> 时生效。若设置，指定 experience 重用的冷却时间（秒）。若未指定，默认为 <code class="docutils literal notranslate"><span class="pre">None</span></code>，表示 experience 不可被重复使用。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">replay_buffer</span></code>: 仅当 <code class="docutils literal notranslate"><span class="pre">storage_type</span></code> 为 <code class="docutils literal notranslate"><span class="pre">queue</span></code> 时生效。用于配置 experience 重用的回放缓冲区。</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">enable</span></code>: 是否将 experience 放回缓冲区。默认为 <code class="docutils literal notranslate"><span class="pre">false</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reuse_cooldown_time</span></code>: experience 重用的冷却时间（秒）。若未指定，默认为 <code class="docutils literal notranslate"><span class="pre">None</span></code>，表示 experience 不可被重复使用。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">priority_fn</span></code>: experience 优先级函数，用于确定 experience 的重用顺序。目前支持 <code class="docutils literal notranslate"><span class="pre">linear_decay</span></code> 和 <code class="docutils literal notranslate"><span class="pre">linear_decay_use_count_control_randomization</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">priority_fn_args</span></code>: 传递给优先级函数的参数字典，具体参数取决于所选的优先级函数。</p></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">auxiliary_buffers</span></code>: trainer 使用的可选缓冲区。为字典结构，每个键为 buffer 名称，值为 buffer 配置。每个 buffer 配置与 <code class="docutils literal notranslate"><span class="pre">experience_buffer</span></code> 类似。</p></li>
@@ -1052,8 +1072,12 @@ document.write(`
 <span class="w">  </span><span class="nt">trainer_type</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;verl&#39;</span>
 <span class="w">  </span><span class="nt">save_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
 <span class="w">  </span><span class="nt">total_steps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<span class="w">  </span><span class="nt">save_strategy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;unrestricted&quot;</span>
+<span class="w">  </span><span class="nt">grad_clip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+<span class="w">  </span><span class="nt">use_dynamic_bsz</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">max_token_len_per_gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16384</span>
+<span class="w">  </span><span class="nt">ulysses_sequence_parallel_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="w">  </span><span class="nt">trainer_config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
-<span class="w">  </span><span class="nt">trainer_config_path</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -1061,8 +1085,19 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">trainer_type</span></code>: trainer 后端实现。目前仅支持 <code class="docutils literal notranslate"><span class="pre">verl</span></code>。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">save_interval</span></code>: 保存模型检查点的频率（步）。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">total_steps</span></code>: 总训练步数。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">save_strategy</span></code>: 模型保存时的并行策略。默认值为<code class="docutils literal notranslate"><span class="pre">unrestricted</span></code>。可选值如下：</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">single_thread</span></code>：整个系统中，仅允许一个线程进行模型保存，不同保存线程之间串行执行。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">single_process</span></code>：整个系统中，仅允许一个进程执行保存，该进程内的多个线程可以并行处理保存任务，不同进程之间串行执行。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">single_node</span></code>：整个系统中，仅允许一个计算节点执行保存，该节点内的进程和线程可并行工作，不同节点的保存串行执行。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unrestricted</span></code>：不限制保存操作，允许多个节点、进程或线程同时保存模型。</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">grad_clip</span></code>: 梯度裁剪阈值。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">use_dynamic_bsz</span></code>: 是否使用动态批量大小。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_token_len_per_gpu</span></code>: 训练过程中，每个 GPU 最大 token 长度; 当 <code class="docutils literal notranslate"><span class="pre">use_dynamic_bsz=true</span></code> 时生效。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ulysses_sequence_parallel_size</span></code>: 序列并行的并行度，即用于分割单个序列的 GPU 数量。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">trainer_config</span></code>: 内联提供的 trainer 配置。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">trainer_config_path</span></code>: trainer 配置文件的路径。<code class="docutils literal notranslate"><span class="pre">trainer_config_path</span></code> 和 <code class="docutils literal notranslate"><span class="pre">trainer_config</span></code> 只能指定其一。</p></li>
 </ul>
 </section>
 <hr class="docutils" />

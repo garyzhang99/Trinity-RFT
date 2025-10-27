@@ -6,11 +6,11 @@
 
 接下来我们将以 ALFWorld 为例说明通用多步工作流。如需动手实践，可直接跳转至 [代码实现](#example-multi-step-alfworld)。
 
-## 构建通用的逐 步工作流
+## 构建通用的多步工作流
 
 ### 基本概念
 
-在 Trinity 中，我们提供了两种通用的逐 步工作流类型：`StepWiseRewardWorkflow` 和 `RewardPropagationWorkflow`。这些工作流设定了每一步的基本结构，并在每次运行时返回一个 `experiences` 列表。它们的区别在于：`StepWiseRewardWorkflow` 为每一步单独计算奖励，而 `RewardPropagationWorkflow` 在所有步骤结束后计算奖励，并将奖励反向传播到之前的步骤。更多细节请参见 `trinity/common/workflows/step_wise_workflow.py`。
+在 Trinity 中，我们提供了两种通用的多步工作流类型：`StepWiseRewardWorkflow` 和 `RewardPropagationWorkflow`。这些工作流设定了每一步的基本结构，并在每次运行时返回一个 `experiences` 列表。它们的区别在于：`StepWiseRewardWorkflow` 为每一步单独计算奖励，而 `RewardPropagationWorkflow` 在所有步骤结束后计算奖励，并将奖励反向传播到之前的步骤。更多细节请参见 `trinity/common/workflows/step_wise_workflow.py`。
 
 要构建一个新的工作流，你主要需要定义 `step()` 中的每一步交互逻辑，以及 `reward()` 中的奖励函数。例如，ALFWorld 工作流的核心代码如下所示：
 
@@ -76,11 +76,11 @@ class StepWiseAlfworldWorkflow(RewardPropagationWorkflow):
 
 在通用多步场景中，每次运行可能会生成不同数量的 experience。为了适应这种情况，我们提供了一些灵活的设计。
 
-- `algorithm.advantage_fn = step_wise_grpo`：该函数允许你在将 experience 加入 buffer 前计算其 Advantage。在此示例中，我们使用 `step_wise_grpo`，它会将最后一步的 Advantage 广播到前面各步 experience。
+- `algorithm.algorithm_type = multi_step_grpo`：该算法允许每次运行包含多个步骤并生成多条 experience 数据用于训练，并将最后一步 experience 的 advantages 值广播到之前的 experience 中。
 
 - `buffer.train_batch_size`：从 buffer 中采样用于训练的 experience 数量，可以与每次探索生成的 experience 数量不同。
 
-- `buffer.trainer_input.use_priority_queue = true`：使用 `PriorityQueue` 可使模型优先使用高优先级的 experience （默认为使用更新产生的 experience）。
+- `buffer.trainer_input.experience_buffer.replay_buffer`：使用 `PriorityQueue` 可使模型优先使用高优先级的 experience （默认为使用更新产生的 experience）。
 
 - `synchronizer.sync_style = dynamic_by_explorer`：由 explorer 决定何时与 trainer 同步模型权重。
 
@@ -91,9 +91,10 @@ project: "ALFWORLD"
 name: "Step_Wise_Alfworld"
 checkpoint_root_dir: ${oc.env:TRINITY_CHECKPOINT_ROOT_DIR,./checkpoints}
 algorithm:
-  algorithm_type: grpo
+  algorithm_type: multi_step_grpo
   repeat_times: 16
-  advantage_fn: step_wise_grpo
+  optimizer:
+    lr: 5e-6
 model:
   model_path: ${oc.env:TRINITY_MODEL_PATH,Qwen/Qwen2.5-7B-Instruct}
   max_response_tokens: 16384
@@ -118,15 +119,16 @@ buffer:
       workflow_args:
         max_env_steps: 30
       enable_progress_bar: false
-    default_workflow_type: 'step_wise_alfworld_workflow'
+      default_workflow_type: 'step_wise_alfworld_workflow'
   trainer_input:
     experience_buffer:
       name: alfworld_buffer
       storage_type: queue
-      use_priority_queue: true
+      replay_buffer:
+        enable: true
 explorer:
   max_repeat_times_per_runner: 1
-  runner_num: 32
+  runner_per_model: 16
   max_timeout: 3600
   rollout_model:
     enable_history: true
@@ -147,27 +149,18 @@ synchronizer:
   sync_timeout: 3600
 trainer:
   save_interval: 50
-  trainer_config:
-    actor_rollout_ref:
-      model:
-        use_remove_padding: true
-      actor:
-        use_dynamic_bsz: true
-        ppo_max_token_len_per_gpu: 16384
-        ulysses_sequence_parallel_size: 1
-        optim:
-          lr: 5e-6
-      ref:
-        log_prob_use_dynamic_bsz: ${trainer.trainer_config.actor_rollout_ref.actor.use_dynamic_bsz}
-        log_prob_max_token_len_per_gpu: ${trainer.trainer_config.actor_rollout_ref.actor.ppo_max_token_len_per_gpu}
-        ulysses_sequence_parallel_size: ${trainer.trainer_config.actor_rollout_ref.actor.ulysses_sequence_parallel_size} # sp size
+  grad_clip: 1.0
+  use_dynamic_bsz: true
+  max_token_len_per_gpu: 16384
+  ulysses_sequence_parallel_size: 1
 ```
-
 
 下面，我们提供运行 ALFWorld 任务的命令。
 
 ## 示例：多步 ALFWorld
+
 ### 环境准备
+
 要安装 ALFWorld 环境，可按照以下说明操作。
 
 1. 使用 pip 安装：`pip install alfworld[full]`

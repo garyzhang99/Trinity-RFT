@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>trinity.buffer package &#8212; Trinity-RFT 0.3.1.dev0 文档</title>
+    <title>trinity.buffer package &#8212; Trinity-RFT 0.4.0.dev0 文档</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=855ea54a"></script>
+    <script src="../_static/documentation_options.js?v=09f53066"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -137,8 +137,8 @@
       
     
     
-    <img src="../_static/logo.svg" class="logo__image only-light" alt="Trinity-RFT 0.3.1.dev0 文档 - Home"/>
-    <script>document.write(`<img src="../_static/logo.svg" class="logo__image only-dark" alt="Trinity-RFT 0.3.1.dev0 文档 - Home"/>`);</script>
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="Trinity-RFT 0.4.0.dev0 文档 - Home"/>
+    <script>document.write(`<img src="../_static/logo.svg" class="logo__image only-dark" alt="Trinity-RFT 0.4.0.dev0 文档 - Home"/>`);</script>
   
   
 </a></div>
@@ -231,6 +231,11 @@
 <li class="toctree-l4"><a class="reference internal" href="trinity.buffer.schema.sql_schema.html">trinity.buffer.schema.sql_schema module</a></li>
 </ul>
 </details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="trinity.buffer.selector.html">trinity.buffer.selector package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="trinity.buffer.selector.difficulty_estimator.html">trinity.buffer.selector.difficulty_estimator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="trinity.buffer.selector.selector.html">trinity.buffer.selector.selector module</a></li>
+</ul>
+</details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="trinity.buffer.storage.html">trinity.buffer.storage package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="trinity.buffer.storage.file.html">trinity.buffer.storage.file module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="trinity.buffer.storage.queue.html">trinity.buffer.storage.queue module</a></li>
@@ -246,6 +251,7 @@
 <li class="toctree-l3"><a class="reference internal" href="trinity.buffer.buffer.html">trinity.buffer.buffer module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="trinity.buffer.buffer_reader.html">trinity.buffer.buffer_reader module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="trinity.buffer.buffer_writer.html">trinity.buffer.buffer_writer module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trinity.buffer.task_scheduler.html">trinity.buffer.task_scheduler module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="trinity.buffer.utils.html">trinity.buffer.utils module</a></li>
 </ul>
 </details></li>
@@ -364,6 +370,7 @@
 </details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="trinity.common.workflows.html">trinity.common.workflows package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="trinity.common.workflows.agentscope.html">trinity.common.workflows.agentscope package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="trinity.common.workflows.agentscope_workflow.html">trinity.common.workflows.agentscope_workflow module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="trinity.common.workflows.customized_math_workflows.html">trinity.common.workflows.customized_math_workflows module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="trinity.common.workflows.customized_toolcall_workflows.html">trinity.common.workflows.customized_toolcall_workflows module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="trinity.common.workflows.eval_workflow.html">trinity.common.workflows.eval_workflow module</a></li>
@@ -588,6 +595,8 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trinity.buffer.BufferReader"><code class="docutils literal notranslate"><span class="pre">BufferReader</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinity.buffer.BufferReader.read"><code class="docutils literal notranslate"><span class="pre">BufferReader.read()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinity.buffer.BufferReader.read_async"><code class="docutils literal notranslate"><span class="pre">BufferReader.read_async()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinity.buffer.BufferReader.state_dict"><code class="docutils literal notranslate"><span class="pre">BufferReader.state_dict()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinity.buffer.BufferReader.load_state_dict"><code class="docutils literal notranslate"><span class="pre">BufferReader.load_state_dict()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trinity.buffer.BufferWriter"><code class="docutils literal notranslate"><span class="pre">BufferWriter</span></code></a><ul class="nav section-nav flex-column">
@@ -663,6 +672,11 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="trinity.buffer.operators.html#trinity.buffer.operators.RewardShapingMapper"><code class="docutils literal notranslate"><span class="pre">RewardShapingMapper</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="trinity.buffer.operators.html#trinity.buffer.operators.RewardShapingMapper.__init__"><code class="docutils literal notranslate"><span class="pre">RewardShapingMapper.__init__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="trinity.buffer.operators.html#trinity.buffer.operators.RewardShapingMapper.process"><code class="docutils literal notranslate"><span class="pre">RewardShapingMapper.process()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="trinity.buffer.operators.html#trinity.buffer.operators.PassRateCalculator"><code class="docutils literal notranslate"><span class="pre">PassRateCalculator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="trinity.buffer.operators.html#trinity.buffer.operators.PassRateCalculator.__init__"><code class="docutils literal notranslate"><span class="pre">PassRateCalculator.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trinity.buffer.operators.html#trinity.buffer.operators.PassRateCalculator.process"><code class="docutils literal notranslate"><span class="pre">PassRateCalculator.process()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="trinity.buffer.operators.html#trinity.buffer.operators.DataJuicerOperator"><code class="docutils literal notranslate"><span class="pre">DataJuicerOperator</span></code></a><ul>
@@ -756,6 +770,27 @@ document.write(`
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="trinity.buffer.selector.html">trinity.buffer.selector package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="trinity.buffer.selector.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="trinity.buffer.selector.difficulty_estimator.html">trinity.buffer.selector.difficulty_estimator module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="trinity.buffer.selector.difficulty_estimator.html#trinity.buffer.selector.difficulty_estimator.BaseBetaPREstimator"><code class="docutils literal notranslate"><span class="pre">BaseBetaPREstimator</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trinity.buffer.selector.difficulty_estimator.html#trinity.buffer.selector.difficulty_estimator.InterpolationBetaPREstimator"><code class="docutils literal notranslate"><span class="pre">InterpolationBetaPREstimator</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="trinity.buffer.selector.selector.html">trinity.buffer.selector.selector module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="trinity.buffer.selector.selector.html#trinity.buffer.selector.selector.BaseSelector"><code class="docutils literal notranslate"><span class="pre">BaseSelector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trinity.buffer.selector.selector.html#trinity.buffer.selector.selector.SequentialSelector"><code class="docutils literal notranslate"><span class="pre">SequentialSelector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trinity.buffer.selector.selector.html#trinity.buffer.selector.selector.ShuffleSelector"><code class="docutils literal notranslate"><span class="pre">ShuffleSelector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trinity.buffer.selector.selector.html#trinity.buffer.selector.selector.RandomSelector"><code class="docutils literal notranslate"><span class="pre">RandomSelector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trinity.buffer.selector.selector.html#trinity.buffer.selector.selector.OfflineEasy2HardSelector"><code class="docutils literal notranslate"><span class="pre">OfflineEasy2HardSelector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trinity.buffer.selector.selector.html#trinity.buffer.selector.selector.DifficultyBasedSelector"><code class="docutils literal notranslate"><span class="pre">DifficultyBasedSelector</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="trinity.buffer.selector.html#module-trinity.buffer.selector">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="trinity.buffer.storage.html">trinity.buffer.storage package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="trinity.buffer.storage.html#submodules">Submodules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="trinity.buffer.storage.file.html">trinity.buffer.storage.file module</a><ul>
@@ -765,7 +800,9 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="trinity.buffer.storage.queue.html">trinity.buffer.storage.queue module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="trinity.buffer.storage.queue.html#trinity.buffer.storage.queue.is_database_url"><code class="docutils literal notranslate"><span class="pre">is_database_url()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="trinity.buffer.storage.queue.html#trinity.buffer.storage.queue.is_json_file"><code class="docutils literal notranslate"><span class="pre">is_json_file()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="trinity.buffer.storage.queue.html#trinity.buffer.storage.queue.linear_decay_priority"><code class="docutils literal notranslate"><span class="pre">linear_decay_priority()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trinity.buffer.storage.queue.html#trinity.buffer.storage.queue.PriorityFunction"><code class="docutils literal notranslate"><span class="pre">PriorityFunction</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trinity.buffer.storage.queue.html#trinity.buffer.storage.queue.LinearDecayPriority"><code class="docutils literal notranslate"><span class="pre">LinearDecayPriority</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="trinity.buffer.storage.queue.html#trinity.buffer.storage.queue.LinearDecayUseCountControlPriority"><code class="docutils literal notranslate"><span class="pre">LinearDecayUseCountControlPriority</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="trinity.buffer.storage.queue.html#trinity.buffer.storage.queue.QueueBuffer"><code class="docutils literal notranslate"><span class="pre">QueueBuffer</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="trinity.buffer.storage.queue.html#trinity.buffer.storage.queue.AsyncQueue"><code class="docutils literal notranslate"><span class="pre">AsyncQueue</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="trinity.buffer.storage.queue.html#trinity.buffer.storage.queue.AsyncPriorityQueue"><code class="docutils literal notranslate"><span class="pre">AsyncPriorityQueue</span></code></a></li>
@@ -818,6 +855,8 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="trinity.buffer.buffer_reader.html#trinity.buffer.buffer_reader.BufferReader"><code class="docutils literal notranslate"><span class="pre">BufferReader</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="trinity.buffer.buffer_reader.html#trinity.buffer.buffer_reader.BufferReader.read"><code class="docutils literal notranslate"><span class="pre">BufferReader.read()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="trinity.buffer.buffer_reader.html#trinity.buffer.buffer_reader.BufferReader.read_async"><code class="docutils literal notranslate"><span class="pre">BufferReader.read_async()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="trinity.buffer.buffer_reader.html#trinity.buffer.buffer_reader.BufferReader.state_dict"><code class="docutils literal notranslate"><span class="pre">BufferReader.state_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="trinity.buffer.buffer_reader.html#trinity.buffer.buffer_reader.BufferReader.load_state_dict"><code class="docutils literal notranslate"><span class="pre">BufferReader.load_state_dict()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -832,9 +871,19 @@ document.write(`
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="trinity.buffer.task_scheduler.html">trinity.buffer.task_scheduler module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="trinity.buffer.task_scheduler.html#trinity.buffer.task_scheduler.TasksetScheduler"><code class="docutils literal notranslate"><span class="pre">TasksetScheduler</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="trinity.buffer.task_scheduler.html#trinity.buffer.task_scheduler.TasksetScheduler.__init__"><code class="docutils literal notranslate"><span class="pre">TasksetScheduler.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="trinity.buffer.task_scheduler.html#trinity.buffer.task_scheduler.TasksetScheduler.build_orders"><code class="docutils literal notranslate"><span class="pre">TasksetScheduler.build_orders()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="trinity.buffer.task_scheduler.html#trinity.buffer.task_scheduler.TasksetScheduler.read_async"><code class="docutils literal notranslate"><span class="pre">TasksetScheduler.read_async()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="trinity.buffer.task_scheduler.html#trinity.buffer.task_scheduler.TasksetScheduler.state_dict"><code class="docutils literal notranslate"><span class="pre">TasksetScheduler.state_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="trinity.buffer.task_scheduler.html#trinity.buffer.task_scheduler.TasksetScheduler.update"><code class="docutils literal notranslate"><span class="pre">TasksetScheduler.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="trinity.buffer.utils.html">trinity.buffer.utils module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="trinity.buffer.utils.html#trinity.buffer.utils.retry_session"><code class="docutils literal notranslate"><span class="pre">retry_session()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="trinity.buffer.utils.html#trinity.buffer.utils.default_storage_path"><code class="docutils literal notranslate"><span class="pre">default_storage_path()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -858,6 +907,16 @@ document.write(`
 <em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">read_async</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span></span></span><a class="reference internal" href="../_modules/trinity/buffer/buffer_reader.html#BufferReader.read_async"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#trinity.buffer.BufferReader.read_async" title="Link to this definition">#</a></dt>
 <dd><p>Read from buffer asynchronously.</p>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trinity.buffer.BufferReader.state_dict">
+<span class="sig-name descname"><span class="pre">state_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/trinity/buffer/buffer_reader.html#BufferReader.state_dict"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#trinity.buffer.BufferReader.state_dict" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trinity.buffer.BufferReader.load_state_dict">
+<span class="sig-name descname"><span class="pre">load_state_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/trinity/buffer/buffer_reader.html#BufferReader.load_state_dict"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#trinity.buffer.BufferReader.load_state_dict" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -910,13 +969,13 @@ document.write(`
 
 <dl class="py function">
 <dt class="sig sig-object py" id="trinity.buffer.get_buffer_reader">
-<span class="sig-prename descclassname"><span class="pre">trinity.buffer.</span></span><span class="sig-name descname"><span class="pre">get_buffer_reader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">storage_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="trinity.common.config.html#trinity.common.config.StorageConfig" title="trinity.common.config.StorageConfig"><span class="pre">StorageConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="trinity.common.config.html#trinity.common.config.BufferConfig" title="trinity.common.config.BufferConfig"><span class="pre">BufferConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="trinity.buffer.buffer_reader.html#trinity.buffer.buffer_reader.BufferReader" title="trinity.buffer.buffer_reader.BufferReader"><span class="pre">BufferReader</span></a></span></span><a class="reference internal" href="../_modules/trinity/buffer/buffer.html#get_buffer_reader"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#trinity.buffer.get_buffer_reader" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">trinity.buffer.</span></span><span class="sig-name descname"><span class="pre">get_buffer_reader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="trinity.common.config.html#trinity.common.config.TasksetConfig" title="trinity.common.config.TasksetConfig"><span class="pre">TasksetConfig</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="trinity.common.config.html#trinity.common.config.ExperienceBufferConfig" title="trinity.common.config.ExperienceBufferConfig"><span class="pre">ExperienceBufferConfig</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="trinity.common.config.html#trinity.common.config.StorageConfig" title="trinity.common.config.StorageConfig"><span class="pre">StorageConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="trinity.buffer.buffer_reader.html#trinity.buffer.buffer_reader.BufferReader" title="trinity.buffer.buffer_reader.BufferReader"><span class="pre">BufferReader</span></a></span></span><a class="reference internal" href="../_modules/trinity/buffer/buffer.html#get_buffer_reader"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#trinity.buffer.get_buffer_reader" title="Link to this definition">#</a></dt>
 <dd><p>Get a buffer reader for the given dataset name.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="trinity.buffer.get_buffer_writer">
-<span class="sig-prename descclassname"><span class="pre">trinity.buffer.</span></span><span class="sig-name descname"><span class="pre">get_buffer_writer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">storage_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="trinity.common.config.html#trinity.common.config.StorageConfig" title="trinity.common.config.StorageConfig"><span class="pre">StorageConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="trinity.common.config.html#trinity.common.config.BufferConfig" title="trinity.common.config.BufferConfig"><span class="pre">BufferConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="trinity.buffer.buffer_writer.html#trinity.buffer.buffer_writer.BufferWriter" title="trinity.buffer.buffer_writer.BufferWriter"><span class="pre">BufferWriter</span></a></span></span><a class="reference internal" href="../_modules/trinity/buffer/buffer.html#get_buffer_writer"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#trinity.buffer.get_buffer_writer" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">trinity.buffer.</span></span><span class="sig-name descname"><span class="pre">get_buffer_writer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="trinity.common.config.html#trinity.common.config.TasksetConfig" title="trinity.common.config.TasksetConfig"><span class="pre">TasksetConfig</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="trinity.common.config.html#trinity.common.config.ExperienceBufferConfig" title="trinity.common.config.ExperienceBufferConfig"><span class="pre">ExperienceBufferConfig</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="trinity.common.config.html#trinity.common.config.StorageConfig" title="trinity.common.config.StorageConfig"><span class="pre">StorageConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="trinity.buffer.buffer_writer.html#trinity.buffer.buffer_writer.BufferWriter" title="trinity.buffer.buffer_writer.BufferWriter"><span class="pre">BufferWriter</span></a></span></span><a class="reference internal" href="../_modules/trinity/buffer/buffer.html#get_buffer_writer"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#trinity.buffer.get_buffer_writer" title="Link to this definition">#</a></dt>
 <dd><p>Get a buffer writer for the given dataset name.</p>
 </dd></dl>
 
@@ -974,6 +1033,8 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trinity.buffer.BufferReader"><code class="docutils literal notranslate"><span class="pre">BufferReader</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinity.buffer.BufferReader.read"><code class="docutils literal notranslate"><span class="pre">BufferReader.read()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinity.buffer.BufferReader.read_async"><code class="docutils literal notranslate"><span class="pre">BufferReader.read_async()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinity.buffer.BufferReader.state_dict"><code class="docutils literal notranslate"><span class="pre">BufferReader.state_dict()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinity.buffer.BufferReader.load_state_dict"><code class="docutils literal notranslate"><span class="pre">BufferReader.load_state_dict()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trinity.buffer.BufferWriter"><code class="docutils literal notranslate"><span class="pre">BufferWriter</span></code></a><ul class="nav section-nav flex-column">

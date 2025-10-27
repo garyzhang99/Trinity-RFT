@@ -95,7 +95,9 @@ Specifies the algorithm type and its related hyperparameters.
 algorithm:
   algorithm_type: grpo
   repeat_times: 8
-
+  optimizer:
+    lr: 1e-6
+    warmup_style: "warmup"
   # The following parameters are optional
   # If not specified, they will automatically be set based on the `algorithm_type`
   sample_strategy: "default"
@@ -107,6 +109,9 @@ algorithm:
 
 - `algorithm_type`: Type of reinforcement learning algorithm. Supported types: `ppo`, `grpo`, `opmd`, `dpo`, `sft`, `mix`.
 - `repeat_times`: Number of times each task is repeated. Default is `1`. In `dpo`, this is automatically set to `2`. Some algorithms such as GRPO and OPMD require `repeat_times` > 1.
+- `optimizer`: Optimizer configuration for actor.
+  - `lr`: Learning rate for actor.
+  - `warmup_style`: Warmup style for actor's learning rate.
 - `sample_strategy`: The sampling strategy used for loading experiences from experience buffer.
 - `advantage_fn`: The advantage function used for computing advantages.
 - `kl_penalty_fn`: The KL penalty function used for computing KL penalty applied in reward.
@@ -160,7 +165,7 @@ model:
 
 - `model_path`: Path to the model being trained.
 - `critic_model_path`: Optional path to a separate critic model. If empty, defaults to `model_path`.
-- `max_model_len`: Maximum number of tokens in a sequence. It is recommended to set this value manually. If not set, it will be inferred from the model configuration.
+- `max_model_len`: Maximum number of tokens in a sequence. It is recommended to set this value manually. If not specified, the system will attempt to set it to `max_prompt_tokens` + `max_response_tokens`. However, this requires both values to be already set; otherwise, an error will be raised.
 - `max_response_tokens`: Maximum number of tokens allowed in generated responses. Only for `chat` and `generate` methods in `InferenceModel`.
 - `max_prompt_tokens`: Maximum number of tokens allowed in prompts. Only for `chat` and `generate` methods in `InferenceModel`.
 - `min_response_tokens`: Minimum number of tokens allowed in generated responses. Only for `chat` and `generate` methods in `InferenceModel`. Default is `1`. It must be less than `max_response_tokens`.
@@ -195,6 +200,7 @@ buffer:
   batch_size: 32
   train_batch_size: 256
   total_epochs: 100
+  total_steps: null
 
   explorer_input:
     taskset:
@@ -209,9 +215,6 @@ buffer:
         ...
       buffer_2:
         ...
-
-  default_workflow_type: 'math_workflow'
-  default_reward_fn_type: 'countdown_reward'
 ```
 
 - `batch_size`: Number of tasks used per training step. *Please do not multiply this value by the `algorithm.repeat_times` manually*.
@@ -226,6 +229,9 @@ Defines the dataset(s) used by the explorer for training and evaluation.
 ```yaml
 buffer:
   explorer_input:
+    default_workflow_type: 'math_workflow'
+    default_eval_workflow_type: 'math_workflow'
+    default_reward_fn_type: 'countdown_reward'
     taskset:
       name: countdown_train
       storage_type: file
@@ -257,21 +263,22 @@ buffer:
 ```
 
 - `buffer.explorer_input.taskset`: Task dataset used for training exploration policies.
-- `buffer.explorer_input.eval_taskset`: List of task datasets used for evaluation.
+- `buffer.explorer_input.eval_tasksets`: List of task datasets used for evaluation.
+- `buffer.explorer_input.default_workflow_type`: Default workflow type for all task datasets under `explorer_input` if not specified at the dataset level.
+- `buffer.explorer_input.default_eval_workflow_type`: Default evaluation workflow type for all eval task datasets under `explorer_input` if not specified at the dataset level.
+- `buffer.explorer_input.default_reward_fn_type`: Default reward function type for all task datasets under `explorer_input` if not specified at the dataset level.
 
 The configuration for each task dataset is defined as follows:
 
 - `name`: Name of the dataset. This name will be used as the Ray actor's name, so it must be unique.
 - `storage_type`: How the dataset is stored. Options: `file`, `queue`, `sql`.
   - `file`: The dataset is stored in `jsonl`/`parquet` files. The data file organization is required to meet the huggingface standard. *We recommand using this storage type for most cases.*
-  - `queue`: The dataset is stored in a queue. The queue is a simple FIFO queue that stores the task dataset. *Do not use this storage type for task dataset unless you know what you are doing.*
   - `sql`: The dataset is stored in a SQL database. *This type is unstable and will be optimized in the future versions.*
 - `path`: The path to the task dataset.
   - For `file` storage type, the path points to the directory that contains the task dataset files.
-  - For `queue` storage type, the path is optional. You can back up the data in the queue by specifying a sqlite database path here.
   - For `sql` storage type, the path points to the sqlite database file.
-- `subset_name`: The subset name of the task dataset. Default is `None`.
-- `split`: The split of the task dataset. Default is `train`.
+- `subset_name`: The subset name of the task dataset, corresponding to the `name` parameter in huggingface datasets `load_dataset` function. Default is `None`.
+- `split`: The split of the task dataset, corresponding to the `split` parameter in huggingface datasets `load_dataset` function. Default is `train`.
 - `repeat_times`: The number of rollouts generated for a task. If not set, it will be automatically set to `algorithm.repeat_times` for `taskset`, and `1` for `eval_tasksets`.
 - `rollout_args`: The parameters for rollout.
   - `temperature`: The temperature for sampling.
@@ -315,7 +322,7 @@ buffer:
     - For `queue` storage type, this field is optional. You can specify a SQLite database or JSON file path here to back up the queue data.
     - For `file` storage type, the path points to the directory containing the dataset files.
     - For `sql` storage type, the path points to the SQLite database file.
-  - `format`: Defines keys for prompts and responses in the dataset.
+  - `format`: Mainly for SFT and DPO algorithm datasets, used to format the extracted data.
     - `prompt_type`: Specifies the type of prompts in the dataset. We support `plaintext`, `messages` for now.
       - `plaintext`: The prompt is in string format.
       - `messages`: The prompt is organized as a message list.
@@ -330,8 +337,11 @@ buffer:
     - `enable_concatenated_multi_turn`: Enable concatenated multi-turn SFT data preprocess. Only for `messages` and only take effect with SFT algorithm.
     - `chat_template`: Specifies the chat template in string format. If not provided, use `model.custom_chat_template`.
   - `max_read_timeout`: The maximum waiting time (in seconds) to read new experience data. If exceeded, an incomplete batch will be returned directly. Only take effect when `storage_type` is `queue`. Default is 1800 seconds (30 minutes).
-  - `use_priority_queue`: Only take effect when `storage_type` is `queue`. If set to `True`, the queue will be a priority queue, which allows for prioritizing certain experiences over others. Default is `False`.
-  - `reuse_cooldown_time`: Only take effect when `storage_type` is `queue` and `use_priority_queue` is `True`. If set, it specifies the cooldown time (in seconds) for reusing experiences. If not specified, the default value is `None`, meaning experiences can not be reused.
+  - `replay_buffer`: Only take effect when `storage_type` is `queue`. Used to configure the replay buffer for experience reuse.
+    - `enable`: Whether to enable the replay buffer. Default is `false`.
+    - `reuse_cooldown_time`: Cooldown time (in seconds) for reusing experiences. If not specified, the default value is `None`, meaning experiences can not be reused.
+    - `priority_fn`: Experience priority function used to determine the order of experience reuse. Currently supports `linear_decay` and `linear_decay_use_count_control_randomization`.
+    - `priority_fn_args`: A dictionary of arguments passed to the priority function, specific parameters depend on the selected priority function.
 - `auxiliary_buffers`: Optional buffers used for trainer. It is a dictionary where each key is the buffer name and the value is the buffer configuration. Each buffer configuration is similar to the `experience_buffer`.
 
 ---
@@ -405,17 +415,28 @@ trainer:
   trainer_type: 'verl'
   save_interval: 100
   total_steps: 1000
+  save_strategy: "unrestricted"
+  grad_clip: 1.0
+  use_dynamic_bsz: true
+  max_token_len_per_gpu: 16384
+  ulysses_sequence_parallel_size: 1
   trainer_config: null
-  trainer_config_path: ''
 ```
 
 - `name`: Name of the trainer. This name will be used as the Ray actor's name, so it must be unique.
 - `trainer_type`: Trainer backend implementation. Currently only supports `verl`.
 - `save_interval`: Frequency (in steps) at which to save model checkpoints.
 - `total_steps`: Total number of training steps.
+- `save_strategy`: The parallel strategy used when saving the model. Defaults to `unrestricted`. The available options are as follows:
+  - `single_thread`: Only one thread across the entire system is allowed to save the model; saving tasks from different threads are executed sequentially.
+  - `single_process`: Only one process across the entire system is allowed to perform saving; multiple threads within that process can handle saving tasks in parallel, while saving operations across different processes are executed sequentially.
+  - `single_node`: Only one compute node across the entire system is allowed to perform saving; processes and threads within that node can work in parallel, while saving operations across different nodes are executed sequentially.
+  - `unrestricted`: No restrictions on saving operations; multiple nodes, processes, or threads are allowed to save the model simultaneously.
+- `grad_clip`: Gradient clipping for updates.
+- `use_dynamic_bsz`: Whether to use dynamic batch size.
+- `max_token_len_per_gpu`:  The maximum number of tokens to be processed in forward and backward when updating the policy. Effective when `use_dynamic_bsz=true`.
+- `ulysses_sequence_parallel_size`: Sequence parallel size.
 - `trainer_config`: The trainer configuration provided inline.
-- `trainer_config_path`: The path to the trainer configuration file. Only one of `trainer_config_path` and `trainer_config` should be specified.
-
 ---
 
 ## Service Configuration

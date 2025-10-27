@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>trinity.common.config &#8212; Trinity-RFT 0.3.1.dev0 文档</title>
+    <title>trinity.common.config &#8212; Trinity-RFT 0.4.0.dev0 文档</title>
   
   
   
@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../../_static/documentation_options.js?v=855ea54a"></script>
+    <script src="../../../_static/documentation_options.js?v=09f53066"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -144,8 +144,8 @@ window.addEventListener("load", () => mermaid.run());
       
     
     
-    <img src="../../../_static/logo.svg" class="logo__image only-light" alt="Trinity-RFT 0.3.1.dev0 文档 - Home"/>
-    <script>document.write(`<img src="../../../_static/logo.svg" class="logo__image only-dark" alt="Trinity-RFT 0.3.1.dev0 文档 - Home"/>`);</script>
+    <img src="../../../_static/logo.svg" class="logo__image only-light" alt="Trinity-RFT 0.4.0.dev0 文档 - Home"/>
+    <script>document.write(`<img src="../../../_static/logo.svg" class="logo__image only-dark" alt="Trinity-RFT 0.4.0.dev0 文档 - Home"/>`);</script>
   
   
 </a></div>
@@ -238,6 +238,11 @@ window.addEventListener("load", () => mermaid.run());
 <li class="toctree-l4"><a class="reference internal" href="../../../build_api/trinity.buffer.schema.sql_schema.html">trinity.buffer.schema.sql_schema module</a></li>
 </ul>
 </details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../build_api/trinity.buffer.selector.html">trinity.buffer.selector package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../build_api/trinity.buffer.selector.difficulty_estimator.html">trinity.buffer.selector.difficulty_estimator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../build_api/trinity.buffer.selector.selector.html">trinity.buffer.selector.selector module</a></li>
+</ul>
+</details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../build_api/trinity.buffer.storage.html">trinity.buffer.storage package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../build_api/trinity.buffer.storage.file.html">trinity.buffer.storage.file module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../build_api/trinity.buffer.storage.queue.html">trinity.buffer.storage.queue module</a></li>
@@ -253,6 +258,7 @@ window.addEventListener("load", () => mermaid.run());
 <li class="toctree-l3"><a class="reference internal" href="../../../build_api/trinity.buffer.buffer.html">trinity.buffer.buffer module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../build_api/trinity.buffer.buffer_reader.html">trinity.buffer.buffer_reader module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../build_api/trinity.buffer.buffer_writer.html">trinity.buffer.buffer_writer module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../build_api/trinity.buffer.task_scheduler.html">trinity.buffer.task_scheduler module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../build_api/trinity.buffer.utils.html">trinity.buffer.utils module</a></li>
 </ul>
 </details></li>
@@ -371,6 +377,7 @@ window.addEventListener("load", () => mermaid.run());
 </details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../build_api/trinity.common.workflows.html">trinity.common.workflows package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../build_api/trinity.common.workflows.agentscope.html">trinity.common.workflows.agentscope package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../build_api/trinity.common.workflows.agentscope_workflow.html">trinity.common.workflows.agentscope_workflow module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../build_api/trinity.common.workflows.customized_math_workflows.html">trinity.common.workflows.customized_math_workflows module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../build_api/trinity.common.workflows.customized_toolcall_workflows.html">trinity.common.workflows.customized_toolcall_workflows module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../build_api/trinity.common.workflows.eval_workflow.html">trinity.common.workflows.eval_workflow module</a></li>
@@ -548,6 +555,7 @@ document.write(`
 <span class="sd">&quot;&quot;&quot;Configs for RFT.&quot;&quot;&quot;</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
@@ -555,6 +563,7 @@ document.write(`
 <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">ray</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">omegaconf</span><span class="w"> </span><span class="kn">import</span> <span class="n">OmegaConf</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">trinity.common.constants</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
@@ -562,10 +571,10 @@ document.write(`
     <span class="n">LOG_DIR_ENV_VAR</span><span class="p">,</span>
     <span class="n">LOG_LEVEL_ENV_VAR</span><span class="p">,</span>
     <span class="n">LOG_NODE_IP_ENV_VAR</span><span class="p">,</span>
-    <span class="n">MAX_MODEL_LEN</span><span class="p">,</span>
     <span class="n">PLUGIN_DIRS_ENV_VAR</span><span class="p">,</span>
     <span class="n">TRAINER_NAME</span><span class="p">,</span>
     <span class="n">PromptType</span><span class="p">,</span>
+    <span class="n">SaveStrategy</span><span class="p">,</span>
     <span class="n">StorageType</span><span class="p">,</span>
     <span class="n">SyncMethod</span><span class="p">,</span>
     <span class="n">SyncStyle</span><span class="p">,</span>
@@ -641,6 +650,20 @@ document.write(`
 
 
 
+<div class="viewcode-block" id="OptimizerConfig">
+<a class="viewcode-back" href="../../../build_api/trinity.common.config.html#trinity.common.config.OptimizerConfig">[文档]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OptimizerConfig</span><span class="p">:</span>
+    <span class="n">lr</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-6</span>
+    <span class="n">lr_warmup_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">lr_warmup_steps_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">min_lr_ratio</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">warmup_style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;constant&quot;</span>
+    <span class="n">optimizer_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;adam&quot;</span>
+    <span class="n">betas</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">])</span></div>
+
+
+
 <div class="viewcode-block" id="LoRAConfig">
 <a class="viewcode-back" href="../../../build_api/trinity.common.config.html#trinity.common.config.LoRAConfig">[文档]</a>
 <span class="nd">@dataclass</span>
@@ -657,11 +680,44 @@ document.write(`
 
 
 
+<div class="viewcode-block" id="TaskSelectorConfig">
+<a class="viewcode-back" href="../../../build_api/trinity.common.config.html#trinity.common.config.TaskSelectorConfig">[文档]</a>
+<span class="nd">@Experimental</span>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TaskSelectorConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Data selector config.&quot;&quot;&quot;</span>
+
+    <span class="n">selector_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;sequential&quot;</span>
+
+    <span class="c1"># For shuffle</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span>
+
+    <span class="c1"># Estimator Config</span>
+    <span class="n">feature_keys</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[])</span>
+    <span class="n">kwargs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ReplayBufferConfig">
+<a class="viewcode-back" href="../../../build_api/trinity.common.config.html#trinity.common.config.ReplayBufferConfig">[文档]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ReplayBufferConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Config for replay buffer used in StorageType.QUEUE.&quot;&quot;&quot;</span>
+
+    <span class="n">enable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">priority_fn</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;linear_decay&quot;</span>
+    <span class="n">reuse_cooldown_time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">priority_fn_args</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;decay&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">})</span></div>
+
+
+
 <div class="viewcode-block" id="StorageConfig">
 <a class="viewcode-back" href="../../../build_api/trinity.common.config.html#trinity.common.config.StorageConfig">[文档]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">StorageConfig</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Storage config.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Storage config for both taskset and experience buffer.</span>
+<span class="sd">    Not visible to users directly. Please use ExperienceBufferConfig or TasksetConfig instead.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="n">storage_type</span><span class="p">:</span> <span class="n">StorageType</span> <span class="o">=</span> <span class="n">StorageType</span><span class="o">.</span><span class="n">FILE</span>
@@ -671,9 +727,6 @@ document.write(`
     <span class="c1"># For continuing training</span>
     <span class="n">index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="c1"># used for multi-modal data</span>
-    <span class="n">mm_data_kwargs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
-
     <span class="c1"># used for StorageType.FILE</span>
     <span class="n">split</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;train&quot;</span>
     <span class="n">subset_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -682,11 +735,7 @@ document.write(`
     <span class="c1"># used for StorageType.QUEUE</span>
     <span class="n">capacity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000</span>
     <span class="n">max_read_timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1800</span>
-    <span class="n">use_priority_queue</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">reuse_cooldown_time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">replay_buffer_kwargs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
-        <span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;priority_fn&quot;</span><span class="p">:</span> <span class="s2">&quot;linear_decay&quot;</span><span class="p">,</span> <span class="s2">&quot;decay&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">}</span>
-    <span class="p">)</span>
+    <span class="n">replay_buffer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ReplayBufferConfig</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">ReplayBufferConfig</span><span class="p">)</span>
 
     <span class="c1"># used for StorageType.SQL</span>
     <span class="n">max_retry_times</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>
@@ -694,11 +743,11 @@ document.write(`
 
     <span class="c1"># used for rollout tasks</span>
     <span class="n">default_workflow_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">default_eval_workflow_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">default_reward_fn_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">rollout_args</span><span class="p">:</span> <span class="n">GenerationConfig</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">GenerationConfig</span><span class="p">)</span>
     <span class="n">workflow_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
     <span class="n">reward_fn_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">task_selector</span><span class="p">:</span> <span class="n">TaskSelectorConfig</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">TaskSelectorConfig</span><span class="p">)</span>
 
     <span class="c1"># enable progress bar (tqdm) for _HFBatchReader</span>
     <span class="n">enable_progress_bar</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
@@ -718,8 +767,150 @@ document.write(`
     <span class="c1"># ! DO NOT SET, automatically set from buffer.total_steps</span>
     <span class="n">total_steps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># automatically set</span>
 
+    <span class="c1"># ! DO NOT SET, automatically set from buffer.batch_size / train_batch_size</span>
+    <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># ! DO NOT SET, automatically set from model.model_path</span>
+    <span class="n">tokenizer_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
     <span class="c1"># ! DO NOT SET,  automatically set corresponding to train/eval</span>
     <span class="n">is_eval</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+
+<div class="viewcode-block" id="TasksetConfig">
+<a class="viewcode-back" href="../../../build_api/trinity.common.config.html#trinity.common.config.TasksetConfig">[文档]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TasksetConfig</span><span class="p">:</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">storage_type</span><span class="p">:</span> <span class="n">StorageType</span> <span class="o">=</span> <span class="n">StorageType</span><span class="o">.</span><span class="n">FILE</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">default_workflow_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">default_reward_fn_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">rollout_args</span><span class="p">:</span> <span class="n">GenerationConfig</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">GenerationConfig</span><span class="p">)</span>
+    <span class="n">workflow_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">reward_fn_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">task_selector</span><span class="p">:</span> <span class="n">TaskSelectorConfig</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">TaskSelectorConfig</span><span class="p">)</span>
+
+    <span class="c1"># used for StorageType.FILE</span>
+    <span class="n">split</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;train&quot;</span>
+    <span class="n">subset_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">format</span><span class="p">:</span> <span class="n">FormatConfig</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">FormatConfig</span><span class="p">)</span>
+
+    <span class="c1"># used for StorageType.SQL</span>
+    <span class="n">max_retry_times</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">max_retry_interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">enable_progress_bar</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># ! DO NOT SET, automatically load from checkpoint</span>
+    <span class="n">index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># ! DO NOT SET, automatically set from algorithm.repeat_times</span>
+    <span class="n">repeat_times</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="c1"># ! DO NOT SET, automatically set based on train/eval</span>
+    <span class="n">is_eval</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="c1"># ! DO NOT SET, automatically set from buffer.batch_size</span>
+    <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># ! DO NOT SET, automatically set from buffer.total_epochs</span>
+    <span class="n">total_epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># automatically set</span>
+    <span class="c1"># ! DO NOT SET, automatically set from buffer.total_steps</span>
+    <span class="n">total_steps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># automatically set</span>
+
+<div class="viewcode-block" id="TasksetConfig.to_storage_config">
+<a class="viewcode-back" href="../../../build_api/trinity.common.config.html#trinity.common.config.TasksetConfig.to_storage_config">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_storage_config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StorageConfig</span><span class="p">:</span>
+        <span class="n">storage_config</span> <span class="o">=</span> <span class="n">StorageConfig</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">storage_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">storage_type</span><span class="p">,</span>
+            <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+            <span class="n">task_selector</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_selector</span><span class="p">,</span>
+            <span class="n">repeat_times</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repeat_times</span><span class="p">,</span>
+            <span class="n">split</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">split</span><span class="p">,</span>
+            <span class="n">subset_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">subset_name</span><span class="p">,</span>
+            <span class="nb">format</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="p">,</span>
+            <span class="n">max_retry_times</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_retry_times</span><span class="p">,</span>
+            <span class="n">max_retry_interval</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_retry_interval</span><span class="p">,</span>
+            <span class="n">default_workflow_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">default_workflow_type</span><span class="p">,</span>
+            <span class="n">default_reward_fn_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">default_reward_fn_type</span><span class="p">,</span>
+            <span class="n">rollout_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rollout_args</span><span class="p">,</span>
+            <span class="n">workflow_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">workflow_args</span><span class="p">,</span>
+            <span class="n">reward_fn_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reward_fn_args</span><span class="p">,</span>
+            <span class="n">enable_progress_bar</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">enable_progress_bar</span><span class="p">,</span>
+            <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+            <span class="n">is_eval</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">is_eval</span><span class="p">,</span>
+            <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span>
+            <span class="n">total_epochs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">total_epochs</span><span class="p">,</span>
+            <span class="n">total_steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">total_steps</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">storage_config</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="ExperienceBufferConfig">
+<a class="viewcode-back" href="../../../build_api/trinity.common.config.html#trinity.common.config.ExperienceBufferConfig">[文档]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExperienceBufferConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Storage Config for trainer input experience buffer.&quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">storage_type</span><span class="p">:</span> <span class="n">StorageType</span> <span class="o">=</span> <span class="n">StorageType</span><span class="o">.</span><span class="n">FILE</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># used for StorageType.QUEUE</span>
+    <span class="n">capacity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000</span>
+    <span class="n">max_read_timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1800</span>
+    <span class="n">replay_buffer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ReplayBufferConfig</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">ReplayBufferConfig</span><span class="p">)</span>
+
+    <span class="c1"># used for StorageType.SQL</span>
+    <span class="n">max_retry_times</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">max_retry_interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="c1"># used for StorageType.FILE</span>
+    <span class="n">split</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;train&quot;</span>
+    <span class="n">subset_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">format</span><span class="p">:</span> <span class="n">FormatConfig</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">FormatConfig</span><span class="p">)</span>
+    <span class="n">enable_progress_bar</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># ! DO NOT SET, automatically set</span>
+    <span class="n">schema_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># ! DO NOT SET</span>
+    <span class="n">index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># ! DO NOT SET, automatically set from buffer.batch_size</span>
+    <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># ! DO NOT SET, automatically set from model.model_path</span>
+    <span class="n">tokenizer_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># ! DO NOT SET, automatically set from buffer.total_epochs</span>
+    <span class="n">total_epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># automatically set</span>
+    <span class="c1"># ! DO NOT SET, automatically set from buffer.total_steps</span>
+    <span class="n">total_steps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># automatically set</span>
+
+<div class="viewcode-block" id="ExperienceBufferConfig.to_storage_config">
+<a class="viewcode-back" href="../../../build_api/trinity.common.config.html#trinity.common.config.ExperienceBufferConfig.to_storage_config">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_storage_config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StorageConfig</span><span class="p">:</span>
+        <span class="n">storage_config</span> <span class="o">=</span> <span class="n">StorageConfig</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">storage_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">storage_type</span><span class="p">,</span>
+            <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+            <span class="n">capacity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">capacity</span><span class="p">,</span>
+            <span class="n">max_read_timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_read_timeout</span><span class="p">,</span>
+            <span class="n">replay_buffer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">replay_buffer</span><span class="p">,</span>
+            <span class="n">max_retry_times</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_retry_times</span><span class="p">,</span>
+            <span class="n">max_retry_interval</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_retry_interval</span><span class="p">,</span>
+            <span class="n">split</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">split</span><span class="p">,</span>
+            <span class="n">subset_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">subset_name</span><span class="p">,</span>
+            <span class="nb">format</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="p">,</span>
+            <span class="n">enable_progress_bar</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">enable_progress_bar</span><span class="p">,</span>
+            <span class="n">schema_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema_type</span><span class="p">,</span>
+            <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+            <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span>
+            <span class="n">tokenizer_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tokenizer_path</span><span class="p">,</span>
+            <span class="n">total_epochs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">total_epochs</span><span class="p">,</span>
+            <span class="n">total_steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">total_steps</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">storage_config</span></div>
+</div>
 
 
 
@@ -752,9 +943,9 @@ document.write(`
 
     <span class="c1"># A dictionary of input buffers, buffers are indexed by their names.</span>
     <span class="c1"># users only need to set extra buffers here</span>
-    <span class="n">inputs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StorageConfig</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">inputs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ExperienceBufferConfig</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
     <span class="c1"># The output buffer will automatically set to the trainer input buffer, so we do not need to set it here.</span>
-    <span class="n">output</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">StorageConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+    <span class="n">output</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ExperienceBufferConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
 
@@ -780,7 +971,7 @@ document.write(`
     <span class="c1"># e.g., /path/to/file.jsonl or /path/to/file.parquet, not a directory or huggingface path</span>
     <span class="n">inputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
     <span class="c1"># Output task buffer, if not set, use `buffer.explorer_input.taskset`. In most cases, users do not need to set this field.</span>
-    <span class="n">output</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">StorageConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">output</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TasksetConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1"># The list of fields extracted from the input tasksets and processed into the output taskset</span>
     <span class="n">target_fields</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
@@ -912,6 +1103,8 @@ document.write(`
     <span class="c1"># for GRPO-like algorithms, repeat each task for `repeat_times` times</span>
     <span class="n">repeat_times</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
 
+    <span class="n">optimizer</span><span class="p">:</span> <span class="n">OptimizerConfig</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">OptimizerConfig</span><span class="p">)</span>
+
     <span class="c1"># the strategy for sampling experiences from the buffer</span>
     <span class="n">sample_strategy</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">sample_strategy_args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -944,8 +1137,9 @@ document.write(`
 <span class="k">class</span><span class="w"> </span><span class="nc">ClusterConfig</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Config for the cluster.&quot;&quot;&quot;</span>
 
-    <span class="n">node_num</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">gpu_per_node</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span></div>
+    <span class="n">ray_address</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span>
+    <span class="n">node_num</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">gpu_per_node</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
 
@@ -956,14 +1150,13 @@ document.write(`
 <span class="k">class</span><span class="w"> </span><span class="nc">ExplorerInput</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Config for explorer input.&quot;&quot;&quot;</span>
 
-    <span class="n">taskset</span><span class="p">:</span> <span class="n">StorageConfig</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">StorageConfig</span><span class="p">)</span>
-    <span class="n">eval_tasksets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">StorageConfig</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">taskset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TasksetConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">tasksets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TasksetConfig</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">eval_tasksets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TasksetConfig</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
     <span class="c1"># The following args provide default values for the corresponding args in `taskset` and `eval_tasksets`</span>
     <span class="n">default_workflow_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">default_eval_workflow_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">default_reward_fn_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">system_prompt</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">reply_prefix</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+    <span class="n">default_reward_fn_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
 
@@ -975,14 +1168,10 @@ document.write(`
 
     <span class="c1"># The main experience buffer to be used in trainer</span>
     <span class="c1"># Commonly, it is also the output buffer of the Explorer</span>
-    <span class="n">experience_buffer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">StorageConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">experience_buffer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ExperienceBufferConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1"># Some auxiliary buffers to facilitate training (e.g., data mixing)</span>
-    <span class="n">auxiliary_buffers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StorageConfig</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
-
-    <span class="c1"># ! Deprecated, keep for backward compatibility, do not use it in new code</span>
-    <span class="n">sft_warmup_dataset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">StorageConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">sft_warmup_steps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+    <span class="n">auxiliary_buffers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ExperienceBufferConfig</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span></div>
 
 
 
@@ -1067,12 +1256,17 @@ document.write(`
     <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># total training steps, training stops when reaching this step, None means no limit</span>
 
     <span class="c1"># trainer configs</span>
-    <span class="n">actor_grad_clip</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">grad_clip</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">use_dynamic_bsz</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1"># if None, automatically set to ceil(2 * model.max_model_len / ulysses_sequence_parallel_size)</span>
+    <span class="n">max_token_len_per_gpu</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">ulysses_sequence_parallel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># sp size</span>
     <span class="c1"># TODO: extract more train-related params from underlying trainer engine</span>
 
-    <span class="c1"># Only one needs to be set for `trainer_config` and `trainer_config_path`</span>
+    <span class="n">save_strategy</span><span class="p">:</span> <span class="n">SaveStrategy</span> <span class="o">=</span> <span class="n">SaveStrategy</span><span class="o">.</span><span class="n">UNRESTRICTED</span>
+
     <span class="n">trainer_config</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
-    <span class="n">trainer_config_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
+    <span class="n">trainer_config_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># deprecated, use `trainer_config` instead</span></div>
 
 
 
@@ -1219,18 +1413,48 @@ document.write(`
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_check_deprecated</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">trainer_input</span><span class="o">.</span><span class="n">sft_warmup_steps</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="s2">&quot;`buffer.trainer_input.sft_warmup_steps` is deprecated, SFT warmup related settings are moved to `stages`.&quot;</span>
-            <span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">trainer_input</span><span class="o">.</span><span class="n">sft_warmup_dataset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="s2">&quot;`buffer.trainer_input.sft_warmup_dataset` is deprecated, SFT warmup related settings are moved to `stages`.&quot;</span>
-            <span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">explorer</span><span class="o">.</span><span class="n">runner_num</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
                 <span class="s2">&quot;`explorer.runner_num` is deprecated, please use `explorer.runner_per_model` instead.&quot;</span>
             <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_config_from_ray_cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update config if `node_num` or `gpu_per_node` are not set.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">node_num</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">gpu_per_node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># init ray cluster to detect node_num and gpu_per_node</span>
+        <span class="n">was_initialized</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">is_initialized</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">was_initialized</span><span class="p">:</span>
+            <span class="n">ray</span><span class="o">.</span><span class="n">init</span><span class="p">(</span>
+                <span class="n">address</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">ray_address</span><span class="p">,</span>
+                <span class="n">ignore_reinit_error</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">namespace</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ray_namespace</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">alive_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">ray</span><span class="o">.</span><span class="n">nodes</span><span class="p">()</span> <span class="k">if</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;alive&quot;</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">alive_nodes</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Could not find any alive nodes in the Ray cluster.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># set node_num</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">node_num</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">node_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">alive_nodes</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Auto-detected and set node_num: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">node_num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># set gpu_per_node</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">gpu_per_node</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">gpu_per_node</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">alive_nodes</span><span class="p">:</span>
+                <span class="n">node_gpus</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Resources&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;GPU&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">node_gpus</span> <span class="ow">and</span> <span class="n">node_gpus</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">gpu_per_node</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">node_gpus</span><span class="p">)</span>
+                    <span class="k">break</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">gpu_per_node</span> <span class="o">=</span> <span class="n">gpu_per_node</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Auto-detected and set gpu_per_node: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">gpu_per_node</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">was_initialized</span><span class="p">:</span>
+            <span class="n">ray</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_check_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">synchronizer</span><span class="o">.</span><span class="n">sync_interval</span> <span class="o">&gt;</span> <span class="mi">0</span>
@@ -1245,71 +1469,64 @@ document.write(`
                     <span class="sa">f</span><span class="s2">&quot;`eval_interval` is not a multiple of `sync_interval`; adjusted to the nearest integer=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">explorer</span><span class="o">.</span><span class="n">eval_interval</span><span class="si">}</span><span class="s2">.&quot;</span>
                 <span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_check_buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># noqa: C901</span>
-        <span class="c1"># TODO: split this function into different buffer read/writer</span>
-        <span class="c1"># check explorer_input</span>
-        <span class="n">trainer_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">trainer_input</span>
-        <span class="n">experience_buffer</span> <span class="o">=</span> <span class="n">trainer_input</span><span class="o">.</span><span class="n">experience_buffer</span>
-        <span class="n">explorer_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">explorer_input</span>
-        <span class="n">taskset</span> <span class="o">=</span> <span class="n">explorer_input</span><span class="o">.</span><span class="n">taskset</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="s2">&quot;train&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">taskset</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;`buffer.explorer_input.taskset.path` is required, please set it to the path of the taskset.&quot;</span>
-            <span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">taskset</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
-            <span class="n">taskset</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;taskset&quot;</span>
-        <span class="k">if</span> <span class="n">taskset</span><span class="o">.</span><span class="n">repeat_times</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">taskset</span><span class="o">.</span><span class="n">repeat_times</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">repeat_times</span><span class="p">:</span>
-            <span class="n">taskset</span><span class="o">.</span><span class="n">repeat_times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">repeat_times</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="s2">&quot;`buffer.explorer_input.taskset.repeat_times` is set to `algorithm.repeat_times`&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot; (=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">repeat_times</span><span class="si">}</span><span class="s2">).&quot;</span>
-            <span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_explorer_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="p">(</span>
-                <span class="n">experience_buffer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="p">),</span> <span class="s2">&quot;`buffer.trainer_input.experience_buffer` is required when `mode` is `train`.&quot;</span>
-            <span class="n">experience_buffer</span><span class="o">.</span><span class="n">total_epochs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">total_epochs</span>
-            <span class="n">experience_buffer</span><span class="o">.</span><span class="n">total_steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">total_steps</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">taskset</span><span class="o">.</span><span class="n">is_eval</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="c1"># no need to check explorer_input in train mode</span>
+            <span class="k">return</span>
+
+        <span class="n">explorer_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">explorer_input</span>
+
+        <span class="k">if</span> <span class="n">explorer_input</span><span class="o">.</span><span class="n">taskset</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">explorer_input</span><span class="o">.</span><span class="n">tasksets</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Do not support setting `taskset` and `tasksets` simultaneously!&quot;</span><span class="p">)</span>
+            <span class="n">explorer_input</span><span class="o">.</span><span class="n">tasksets</span> <span class="o">=</span> <span class="p">[</span><span class="n">explorer_input</span><span class="o">.</span><span class="n">taskset</span><span class="p">]</span>
+            <span class="n">explorer_input</span><span class="o">.</span><span class="n">taskset</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">explorer_input</span><span class="o">.</span><span class="n">tasksets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;At least one taskset should be provided in explorer_input!&quot;</span><span class="p">)</span>
+        <span class="n">tasksets</span> <span class="o">=</span> <span class="n">explorer_input</span><span class="o">.</span><span class="n">tasksets</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">taskset</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tasksets</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="s2">&quot;train&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">taskset</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;`buffer.explorer_input.taskset.path` is required, please set it to the path of the taskset.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">taskset</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="n">taskset</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;taskset_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">if</span> <span class="n">taskset</span><span class="o">.</span><span class="n">repeat_times</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">taskset</span><span class="o">.</span><span class="n">repeat_times</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">repeat_times</span><span class="p">:</span>
+                <span class="n">taskset</span><span class="o">.</span><span class="n">repeat_times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">repeat_times</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="s2">&quot;`buffer.explorer_input.taskset.repeat_times` is set to `algorithm.repeat_times`&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot; (=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">repeat_times</span><span class="si">}</span><span class="s2">).&quot;</span>
+                <span class="p">)</span>
             <span class="n">taskset</span><span class="o">.</span><span class="n">total_epochs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">total_epochs</span>
             <span class="n">taskset</span><span class="o">.</span><span class="n">total_steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">total_steps</span>
+            <span class="n">taskset</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">batch_size</span>
+            <span class="n">set_if_none</span><span class="p">(</span><span class="n">taskset</span><span class="p">,</span> <span class="s2">&quot;default_workflow_type&quot;</span><span class="p">,</span> <span class="n">explorer_input</span><span class="o">.</span><span class="n">default_workflow_type</span><span class="p">)</span>
+            <span class="n">set_if_none</span><span class="p">(</span><span class="n">taskset</span><span class="p">,</span> <span class="s2">&quot;default_reward_fn_type&quot;</span><span class="p">,</span> <span class="n">explorer_input</span><span class="o">.</span><span class="n">default_reward_fn_type</span><span class="p">)</span>
+            <span class="n">set_if_none</span><span class="p">(</span><span class="n">taskset</span><span class="p">,</span> <span class="s2">&quot;ray_namespace&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ray_namespace</span><span class="p">)</span>
+            <span class="n">set_if_none</span><span class="p">(</span><span class="n">taskset</span><span class="o">.</span><span class="n">rollout_args</span><span class="p">,</span> <span class="s2">&quot;max_tokens&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">max_response_tokens</span><span class="p">)</span>
 
-        <span class="n">set_if_none</span><span class="p">(</span><span class="n">taskset</span><span class="p">,</span> <span class="s2">&quot;default_workflow_type&quot;</span><span class="p">,</span> <span class="n">explorer_input</span><span class="o">.</span><span class="n">default_workflow_type</span><span class="p">)</span>
-        <span class="n">set_if_none</span><span class="p">(</span>
-            <span class="n">taskset</span><span class="p">,</span> <span class="s2">&quot;default_eval_workflow_type&quot;</span><span class="p">,</span> <span class="n">explorer_input</span><span class="o">.</span><span class="n">default_eval_workflow_type</span>
-        <span class="p">)</span>
-        <span class="n">set_if_none</span><span class="p">(</span><span class="n">taskset</span><span class="p">,</span> <span class="s2">&quot;default_reward_fn_type&quot;</span><span class="p">,</span> <span class="n">explorer_input</span><span class="o">.</span><span class="n">default_reward_fn_type</span><span class="p">)</span>
-        <span class="n">set_if_none</span><span class="p">(</span><span class="n">taskset</span><span class="o">.</span><span class="n">format</span><span class="p">,</span> <span class="s2">&quot;system_prompt&quot;</span><span class="p">,</span> <span class="n">explorer_input</span><span class="o">.</span><span class="n">system_prompt</span><span class="p">)</span>
-        <span class="n">set_if_none</span><span class="p">(</span><span class="n">taskset</span><span class="o">.</span><span class="n">format</span><span class="p">,</span> <span class="s2">&quot;reply_prefix&quot;</span><span class="p">,</span> <span class="n">explorer_input</span><span class="o">.</span><span class="n">reply_prefix</span><span class="p">)</span>
-        <span class="n">set_if_none</span><span class="p">(</span><span class="n">taskset</span><span class="p">,</span> <span class="s2">&quot;ray_namespace&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ray_namespace</span><span class="p">)</span>
-        <span class="n">set_if_none</span><span class="p">(</span><span class="n">taskset</span><span class="o">.</span><span class="n">rollout_args</span><span class="p">,</span> <span class="s2">&quot;max_tokens&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">max_response_tokens</span><span class="p">)</span>
-
-        <span class="n">remained_tasksets</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">explorer_input</span><span class="o">.</span><span class="n">eval_tasksets</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">dataset</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Eval dataset [</span><span class="si">{</span><span class="n">dataset</span><span class="si">}</span><span class="s2">]&#39;s path is not configured. Skip.&quot;</span><span class="p">)</span>
-                <span class="k">continue</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Eval dataset [</span><span class="si">{</span><span class="n">dataset</span><span class="si">}</span><span class="s2">]&#39;s path is not configured.&quot;</span><span class="p">)</span>
             <span class="n">dataset</span><span class="o">.</span><span class="n">is_eval</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">dataset</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">batch_size</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">dataset</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
                 <span class="n">dataset</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;eval_taskset_</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="n">set_if_none</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s2">&quot;repeat_times&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="c1"># eval_workflow has higher priority than workflow in eval tasksets, so we set it first</span>
+            <span class="n">set_if_none</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s2">&quot;default_workflow_type&quot;</span><span class="p">,</span> <span class="n">explorer_input</span><span class="o">.</span><span class="n">default_eval_workflow_type</span><span class="p">)</span>
             <span class="n">set_if_none</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s2">&quot;default_workflow_type&quot;</span><span class="p">,</span> <span class="n">explorer_input</span><span class="o">.</span><span class="n">default_workflow_type</span><span class="p">)</span>
-            <span class="n">set_if_none</span><span class="p">(</span>
-                <span class="n">dataset</span><span class="p">,</span> <span class="s2">&quot;default_eval_workflow_type&quot;</span><span class="p">,</span> <span class="n">explorer_input</span><span class="o">.</span><span class="n">default_eval_workflow_type</span>
-            <span class="p">)</span>
             <span class="n">set_if_none</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s2">&quot;default_reward_fn_type&quot;</span><span class="p">,</span> <span class="n">explorer_input</span><span class="o">.</span><span class="n">default_reward_fn_type</span><span class="p">)</span>
-            <span class="n">set_if_none</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">format</span><span class="p">,</span> <span class="s2">&quot;system_prompt&quot;</span><span class="p">,</span> <span class="n">explorer_input</span><span class="o">.</span><span class="n">system_prompt</span><span class="p">)</span>
-            <span class="n">set_if_none</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">format</span><span class="p">,</span> <span class="s2">&quot;reply_prefix&quot;</span><span class="p">,</span> <span class="n">explorer_input</span><span class="o">.</span><span class="n">reply_prefix</span><span class="p">)</span>
             <span class="n">set_if_none</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s2">&quot;ray_namespace&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ray_namespace</span><span class="p">)</span>
             <span class="n">set_if_none</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">rollout_args</span><span class="p">,</span> <span class="s2">&quot;max_tokens&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">max_response_tokens</span><span class="p">)</span>
-            <span class="n">remained_tasksets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
-        <span class="n">explorer_input</span><span class="o">.</span><span class="n">eval_tasksets</span> <span class="o">=</span> <span class="n">remained_tasksets</span>
 
-        <span class="c1"># check trainer_input.experience_buffer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_trainer_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">trainer_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">trainer_input</span>
+        <span class="n">experience_buffer</span> <span class="o">=</span> <span class="n">trainer_input</span><span class="o">.</span><span class="n">experience_buffer</span>
+
         <span class="k">if</span> <span class="n">experience_buffer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">experience_buffer</span> <span class="o">=</span> <span class="n">trainer_input</span><span class="o">.</span><span class="n">experience_buffer</span> <span class="o">=</span> <span class="n">StorageConfig</span><span class="p">(</span>
+            <span class="n">experience_buffer</span> <span class="o">=</span> <span class="n">trainer_input</span><span class="o">.</span><span class="n">experience_buffer</span> <span class="o">=</span> <span class="n">ExperienceBufferConfig</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;experience_buffer&quot;</span><span class="p">,</span>
                 <span class="n">storage_type</span><span class="o">=</span><span class="n">StorageType</span><span class="o">.</span><span class="n">QUEUE</span><span class="p">,</span>
             <span class="p">)</span>
@@ -1320,29 +1537,54 @@ document.write(`
             <span class="p">)</span>
             <span class="n">experience_buffer</span><span class="o">.</span><span class="n">storage_type</span> <span class="o">=</span> <span class="n">StorageType</span><span class="o">.</span><span class="n">QUEUE</span>
 
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">experience_buffer</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="n">experience_buffer</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;experience_buffer&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">experience_buffer</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="n">experience_buffer</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_storage_path</span><span class="p">(</span>
+                <span class="n">experience_buffer</span><span class="o">.</span><span class="n">storage_type</span><span class="p">,</span> <span class="n">experience_buffer</span><span class="o">.</span><span class="n">name</span>
+            <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Auto set `buffer.trainer_input.experience_buffer.path` to </span><span class="si">{</span><span class="n">experience_buffer</span><span class="o">.</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
         <span class="kn">from</span><span class="w"> </span><span class="nn">trinity.algorithm.algorithm</span><span class="w"> </span><span class="kn">import</span> <span class="n">ALGORITHM_TYPE</span>
 
         <span class="n">experience_buffer</span><span class="o">.</span><span class="n">schema_type</span> <span class="o">=</span> <span class="n">ALGORITHM_TYPE</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">algorithm_type</span><span class="p">)</span><span class="o">.</span><span class="n">schema</span>
-
+        <span class="n">experience_buffer</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">train_batch_size</span>
+        <span class="n">experience_buffer</span><span class="o">.</span><span class="n">tokenizer_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">model_path</span>
         <span class="n">set_if_none</span><span class="p">(</span><span class="n">experience_buffer</span><span class="p">,</span> <span class="s2">&quot;ray_namespace&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ray_namespace</span><span class="p">)</span>
         <span class="n">set_if_none</span><span class="p">(</span><span class="n">experience_buffer</span><span class="o">.</span><span class="n">format</span><span class="p">,</span> <span class="s2">&quot;chat_template&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">custom_chat_template</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">aux_name</span><span class="p">,</span> <span class="n">aux_buffer</span> <span class="ow">in</span> <span class="n">trainer_input</span><span class="o">.</span><span class="n">auxiliary_buffers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">aux_buffer</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">train_batch_size</span>
+            <span class="n">aux_buffer</span><span class="o">.</span><span class="n">tokenizer_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">model_path</span>
+            <span class="n">set_if_none</span><span class="p">(</span><span class="n">aux_buffer</span><span class="p">,</span> <span class="s2">&quot;ray_namespace&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ray_namespace</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">aux_buffer</span><span class="o">.</span><span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">aux_buffer</span><span class="o">.</span><span class="n">path</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;`buffer.trainer_input.auxiliary_buffers[</span><span class="si">{</span><span class="n">aux_name</span><span class="si">}</span><span class="s2">].path` is required, &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;please set it to the path of the auxiliary buffer.&quot;</span>
+                <span class="p">)</span>
 
-        <span class="c1"># create buffer.cache_dir at &lt;checkpoint_root_dir&gt;/&lt;project&gt;/&lt;name&gt;/buffer</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">cache_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">checkpoint_job_dir</span><span class="p">,</span> <span class="s2">&quot;buffer&quot;</span><span class="p">))</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">cache_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to create buffer dir </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">cache_dir</span><span class="si">}</span><span class="s2">, please check &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;your checkpoint directory: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">checkpoint_job_dir</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="p">(</span>
+                <span class="n">experience_buffer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="p">),</span> <span class="s2">&quot;`buffer.trainer_input.experience_buffer` is required when `mode` is `train`.&quot;</span>
+            <span class="n">experience_buffer</span><span class="o">.</span><span class="n">total_epochs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">total_epochs</span>
+            <span class="n">experience_buffer</span><span class="o">.</span><span class="n">total_steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">total_steps</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_default_storage_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">storage_type</span><span class="p">:</span> <span class="n">StorageType</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">storage_type</span> <span class="o">==</span> <span class="n">StorageType</span><span class="o">.</span><span class="n">SQL</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;sqlite:///&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">cache_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.db&quot;</span><span class="p">)</span>  <span class="c1"># type: ignore[arg-type]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">cache_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.jsonl&quot;</span><span class="p">)</span>  <span class="c1"># type: ignore[arg-type]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_data_processor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># check input/output buffers in pipelines</span>
         <span class="n">experience_pipeline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_processor</span><span class="o">.</span><span class="n">experience_pipeline</span>
         <span class="k">if</span> <span class="n">experience_pipeline</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">experience_pipeline</span><span class="o">.</span><span class="n">save_input</span> <span class="ow">and</span> <span class="n">experience_pipeline</span><span class="o">.</span><span class="n">input_save_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">experience_pipeline</span><span class="o">.</span><span class="n">input_save_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">cache_dir</span><span class="p">,</span> <span class="s2">&quot;explorer_output.jsonl&quot;</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">cache_dir</span><span class="p">,</span> <span class="s2">&quot;explorer_output.jsonl&quot;</span>  <span class="c1"># type: ignore[arg-type]</span>
                 <span class="p">)</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;Auto set `data_processor.experience_pipeline.input_save_path` to </span><span class="si">{</span><span class="n">experience_pipeline</span><span class="o">.</span><span class="n">input_save_path</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -1351,18 +1593,13 @@ document.write(`
         <span class="n">task_pipeline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_processor</span><span class="o">.</span><span class="n">task_pipeline</span>
         <span class="k">if</span> <span class="n">task_pipeline</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">task_pipeline</span><span class="o">.</span><span class="n">output</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">taskset</span><span class="o">.</span><span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">task_pipeline</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">taskset</span>
-                <span class="k">elif</span> <span class="p">(</span>
-                    <span class="n">experience_buffer</span><span class="o">.</span><span class="n">schema_type</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;dpo&quot;</span><span class="p">,</span> <span class="s2">&quot;sft&quot;</span><span class="p">}</span>
-                    <span class="ow">and</span> <span class="n">experience_buffer</span><span class="o">.</span><span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-                <span class="p">):</span>
-                    <span class="n">task_pipeline</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">experience_buffer</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+                    <span class="n">task_pipeline</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">explorer_input</span><span class="o">.</span><span class="n">tasksets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">algorithm_type</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;dpo&quot;</span><span class="p">,</span> <span class="s2">&quot;sft&quot;</span><span class="p">}:</span>
+                    <span class="n">task_pipeline</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">trainer_input</span><span class="o">.</span><span class="n">experience_buffer</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                        <span class="s2">&quot;`data_processor.task_pipeline.output` is required when both &quot;</span>
-                        <span class="s2">&quot;`buffer.explorer_input.taskset.path` and `buffer.trainer_input.experience_buffer.path` are &quot;</span>
-                        <span class="s2">&quot;None&quot;</span>
+                        <span class="s2">&quot;`data_processor.task_pipeline.output` is missing. Please set it to the desired output storage config.&quot;</span>
                     <span class="p">)</span>
             <span class="k">if</span> <span class="n">task_pipeline</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">path</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">task_pipeline</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -1370,6 +1607,7 @@ document.write(`
                     <span class="s2">&quot;Please choose a different output path to avoid overwriting.&quot;</span>
                 <span class="p">)</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># noqa: C901</span>
         <span class="c1"># check train_batch_size</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">train_batch_size</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">algorithm_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;sft&quot;</span><span class="p">,</span> <span class="s2">&quot;dpo&quot;</span><span class="p">]:</span>
@@ -1381,6 +1619,16 @@ document.write(`
                 <span class="s2">&quot;`buffer.train_batch_size` is set to `buffer.batch_size` * `algorithm.repeat_times`&quot;</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">train_batch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">repeat_times</span>
+
+        <span class="c1"># create buffer.cache_dir at &lt;checkpoint_root_dir&gt;/&lt;project&gt;/&lt;name&gt;/buffer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">cache_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">checkpoint_job_dir</span><span class="p">,</span> <span class="s2">&quot;buffer&quot;</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">cache_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Failed to create buffer dir </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">cache_dir</span><span class="si">}</span><span class="s2">, please check &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;your checkpoint directory: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">checkpoint_job_dir</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
 
         <span class="c1"># set pad_token_id / tokenizer_path</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">pad_token_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1399,7 +1647,10 @@ document.write(`
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to get pad token id from model </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">model_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">pad_token_id</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">tokenizer_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">model_path</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_explorer_input</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_trainer_input</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_data_processor</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_check_algorithm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">trinity.algorithm</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
@@ -1466,21 +1717,7 @@ document.write(`
                     <span class="sa">f</span><span class="s2">&quot;`max_model_len` is set to </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">max_model_len</span><span class="si">}</span><span class="s2"> from `max_prompt_tokens` and `max_response_tokens`.&quot;</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoConfig</span><span class="p">,</span> <span class="n">AutoTokenizer</span>
-                <span class="kn">from</span><span class="w"> </span><span class="nn">transformers.tokenization_utils_base</span><span class="w"> </span><span class="kn">import</span> <span class="n">LARGE_INTEGER</span>
-
-                <span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">model_path</span><span class="p">)</span>
-                <span class="n">config</span> <span class="o">=</span> <span class="n">AutoConfig</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">model_path</span><span class="p">)</span>
-                <span class="n">max_model_len</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
-                    <span class="nb">getattr</span><span class="p">(</span><span class="n">tokenizer</span><span class="p">,</span> <span class="s2">&quot;model_max_length&quot;</span><span class="p">,</span> <span class="n">LARGE_INTEGER</span><span class="p">),</span>
-                    <span class="nb">getattr</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s2">&quot;max_position_embeddings&quot;</span><span class="p">,</span> <span class="n">LARGE_INTEGER</span><span class="p">),</span>
-                <span class="p">)</span>
-                <span class="k">if</span> <span class="n">max_model_len</span> <span class="o">&gt;=</span> <span class="n">LARGE_INTEGER</span><span class="p">:</span>
-                    <span class="n">max_model_len</span> <span class="o">=</span> <span class="n">MAX_MODEL_LEN</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;Failed to get `max_model_len` from model </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">model_path</span><span class="si">}</span><span class="s2">, use </span><span class="si">{</span><span class="n">MAX_MODEL_LEN</span><span class="si">}</span><span class="s2"> instead.&quot;</span>
-                    <span class="p">)</span>
-                <span class="n">model</span><span class="o">.</span><span class="n">max_model_len</span> <span class="o">=</span> <span class="n">max_model_len</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unable to determine `max_model_len`, please set it manually.&quot;</span><span class="p">)</span>
 
         <span class="c1"># both max_prompt_tokens and max_response_tokens are None</span>
         <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">max_prompt_tokens</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">model</span><span class="o">.</span><span class="n">max_response_tokens</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1537,6 +1774,9 @@ document.write(`
         <span class="c1"># set namespace</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ray_namespace</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ray_namespace</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ray_namespace</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">project</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># check cluster infomation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_config_from_ray_cluster</span><span class="p">()</span>
 
         <span class="c1"># check algorithm</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_algorithm</span><span class="p">()</span>
@@ -1673,15 +1913,19 @@ document.write(`
                         <span class="n">trainer_config_schema</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">trainer_config</span>
                     <span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">trainer_config</span> <span class="o">=</span> <span class="n">OmegaConf</span><span class="o">.</span><span class="n">to_object</span><span class="p">(</span><span class="n">trainer_config</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">trainer_config_path</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;`trainer_config_path` is deprecated; please use `trainer_config` instead.&quot;</span>
+                    <span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">trainer_config_path</span><span class="p">):</span>
-                        <span class="kn">from</span><span class="w"> </span><span class="nn">trinity.common.verl_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_config</span>
+                    <span class="kn">from</span><span class="w"> </span><span class="nn">trinity.common.verl_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">veRLConfig</span>
 
-                        <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">trainer_config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">trainer_config_path</span><span class="p">)</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">&quot;Invalid trainer config path: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">trainer_config_path</span><span class="si">}</span><span class="s2">&quot;</span>
-                        <span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;`trainer_config` is not provided, using default trainer config.&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">trainer_config</span> <span class="o">=</span> <span class="n">veRLConfig</span><span class="p">()</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">max_token_len_per_gpu</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">max_token_len_per_gpu</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span>
+                        <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">max_model_len</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">ulysses_sequence_parallel_size</span>  <span class="c1"># type: ignore [operator]</span>
+                    <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid trainer type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">trainer_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">trainer_config</span><span class="o">.</span><span class="n">synchronize_config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>

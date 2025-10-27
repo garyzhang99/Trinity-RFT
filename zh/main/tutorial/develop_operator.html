@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Operator 开发指南 &#8212; Trinity-RFT 0.3.1.dev0 文档</title>
+    <title>Operator 开发指南 &#8212; Trinity-RFT 0.4.0.dev0 文档</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=855ea54a"></script>
+    <script src="../_static/documentation_options.js?v=09f53066"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -137,8 +137,8 @@
       
     
     
-    <img src="../_static/logo.svg" class="logo__image only-light" alt="Trinity-RFT 0.3.1.dev0 文档 - Home"/>
-    <script>document.write(`<img src="../_static/logo.svg" class="logo__image only-dark" alt="Trinity-RFT 0.3.1.dev0 文档 - Home"/>`);</script>
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="Trinity-RFT 0.4.0.dev0 文档 - Home"/>
+    <script>document.write(`<img src="../_static/logo.svg" class="logo__image only-dark" alt="Trinity-RFT 0.4.0.dev0 文档 - Home"/>`);</script>
   
   
 </a></div>
@@ -231,6 +231,11 @@
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.buffer.schema.sql_schema.html">trinity.buffer.schema.sql_schema module</a></li>
 </ul>
 </details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../build_api/trinity.buffer.selector.html">trinity.buffer.selector package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.buffer.selector.difficulty_estimator.html">trinity.buffer.selector.difficulty_estimator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.buffer.selector.selector.html">trinity.buffer.selector.selector module</a></li>
+</ul>
+</details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../build_api/trinity.buffer.storage.html">trinity.buffer.storage package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.buffer.storage.file.html">trinity.buffer.storage.file module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.buffer.storage.queue.html">trinity.buffer.storage.queue module</a></li>
@@ -246,6 +251,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.buffer.buffer.html">trinity.buffer.buffer module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.buffer.buffer_reader.html">trinity.buffer.buffer_reader module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.buffer.buffer_writer.html">trinity.buffer.buffer_writer module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.buffer.task_scheduler.html">trinity.buffer.task_scheduler module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.buffer.utils.html">trinity.buffer.utils module</a></li>
 </ul>
 </details></li>
@@ -364,6 +370,7 @@
 </details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../build_api/trinity.common.workflows.html">trinity.common.workflows package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.workflows.agentscope.html">trinity.common.workflows.agentscope package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.workflows.agentscope_workflow.html">trinity.common.workflows.agentscope_workflow module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.workflows.customized_math_workflows.html">trinity.common.workflows.customized_math_workflows module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.workflows.customized_toolcall_workflows.html">trinity.common.workflows.customized_toolcall_workflows module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.workflows.eval_workflow.html">trinity.common.workflows.eval_workflow module</a></li>
@@ -603,9 +610,9 @@ document.write(`
 <p>Operator 模块负责处理由 Explorer 所生成的轨迹数据（我们称之为 <code class="docutils literal notranslate"><span class="pre">Experience</span></code>）。它原生支持来自 <a class="reference external" href="https://github.com/modelscope/data-juicer">Data-Juicer</a> 的数据处理功能，也允许开发者实现自己的算子。
 通过自定义数据处理算子，开发者可以实现各种数据处理功能，如数据增强、过滤和转换。你甚至可以将优势值/回报值计算实现为 Operator，如 <a class="reference internal" href="develop_algorithm.html#algorithms"><span class="std std-ref">算法</span></a> 部分所示。</p>
 <ul class="simple">
-<li><p><strong>DataJuicerOperator</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">trinity.data.operators.DataJuicerOperator</span></code>)：封装后的 Data-Juicer 算子，使用时只需在配置文件中标明想要使用的 Data-Juicer 算子列表即可。完整的 Data-Juicer 算子列表请见 <a class="reference external" href="https://modelscope.github.io/data-juicer/en/main/docs/Operators.html">此处</a>。</p></li>
-<li><p><strong>ExperienceOperator</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">trinity.data.operators.ExperienceOperator</span></code>)：用于 experience 数据处理的所有数据处理算子的基类。定义了所有数据处理算子应具备的接口和通用功能。每个算子处理一批 experience 数据，并返回处理后的数据及用于日志记录的指标。</p></li>
-<li><p><strong>ExperiencePipeline</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">trinity.data.pipelines.ExperiencePipeline</span></code>)：管理一系列数据处理算子的 experience 数据处理流水线。它从 <code class="docutils literal notranslate"><span class="pre">Explorer</span></code> 获取原始 experience，通过流水线中的每个算子处理，最后将最终处理过的 experience 写入 <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> 的输入缓冲区。</p></li>
+<li><p><strong>DataJuicerOperator</strong> (<a class="reference internal" href="../build_api/trinity.buffer.operators.html#trinity.buffer.operators.DataJuicerOperator" title="trinity.buffer.operators.DataJuicerOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">trinity.buffer.operators.DataJuicerOperator</span></code></a>)：封装后的 Data-Juicer 算子，使用时只需在配置文件中标明想要使用的 Data-Juicer 算子列表即可。完整的 Data-Juicer 算子列表请见 <a class="reference external" href="https://modelscope.github.io/data-juicer/en/main/docs/Operators.html">此处</a>。</p></li>
+<li><p><strong>ExperienceOperator</strong> (<a class="reference internal" href="../build_api/trinity.buffer.operators.html#trinity.buffer.operators.ExperienceOperator" title="trinity.buffer.operators.ExperienceOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">trinity.buffer.operators.ExperienceOperator</span></code></a>)：用于 experience 数据处理的所有数据处理算子的基类。定义了所有数据处理算子应具备的接口和通用功能。每个算子处理一批 experience 数据，并返回处理后的数据及用于日志记录的指标。</p></li>
+<li><p><strong>ExperiencePipeline</strong> (<a class="reference internal" href="../build_api/trinity.buffer.pipelines.html#trinity.buffer.pipelines.ExperiencePipeline" title="trinity.buffer.pipelines.ExperiencePipeline"><code class="xref py py-class docutils literal notranslate"><span class="pre">trinity.buffer.pipelines.ExperiencePipeline</span></code></a>)：管理一系列数据处理算子的 experience 数据处理流水线。它从 <code class="docutils literal notranslate"><span class="pre">Explorer</span></code> 获取原始 experience，通过流水线中的每个算子处理，最后将最终处理过的 experience 写入 <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> 的输入缓冲区。</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">备注</p>
@@ -649,7 +656,7 @@ document.write(`
         <span class="k">return</span> <span class="n">filtered_exps</span><span class="p">,</span> <span class="n">metrics</span>
 </pre></div>
 </div>
-<p>实现后，你需要通过 <code class="xref py py-class docutils literal notranslate"><span class="pre">trinity.data.operators.EXPERIENCE_OPERATORS</span></code> 注册此模块。注册后，该模块可在配置文件中使用注册名称进行配置。</p>
+<p>实现后，你需要通过 <code class="xref py py-class docutils literal notranslate"><span class="pre">trinity.buffer.operators.EXPERIENCE_OPERATORS</span></code> 注册此模块。注册后，该模块可在配置文件中使用注册名称进行配置。</p>
 </section>
 <section id="id3">
 <h2>步骤 2：使用此算子<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>

@@ -30,13 +30,14 @@ huggingface-cli download Qwen/Qwen2.5-1.5B-Instruct --local-dir $MODEL_PATH/Qwen
 
 ```bash
 # 使用 Modelscope
-modelscope download --dataset modelscope/gsm8k --local_dir $DATASET_PATH/gsm8k
+modelscope download --dataset AI-ModelScope/gsm8k --local_dir $DATASET_PATH/gsm8k
 
 # 使用 Huggingface
 huggingface-cli download openai/gsm8k --repo-type dataset --local-dir $DATASET_PATH/gsm8k
 ```
 
 更多关于数据集下载的细节请参考 [ModelScope](https://modelscope.cn/docs/datasets/download) 或 [Huggingface](https://huggingface.co/docs/huggingface_hub/main/en/guides/cli#download-a-dataset-or-a-space)。
+从 ModelScope 下载的数据集可能缺少 `dtype` 字段，导致加载数据集时出错。要解决这个问题，请删除 `dataset_infos.json` 文件并重新运行实验。
 
 ## 第 2 步：配置实验并运行
 
@@ -59,6 +60,8 @@ algorithm:
     lr: 1e-5
 model:
   model_path: ${oc.env:TRINITY_MODEL_PATH,Qwen/Qwen2.5-1.5B-Instruct}
+  max_response_tokens: 1024
+  max_model_len: 2048
 cluster:
   node_num: 1
   gpu_per_node: 2
@@ -69,7 +72,7 @@ buffer:
     taskset:
       name: gsm8k
       storage_type: file
-      path: 'openai/gsm8k'
+      path: ${oc.env:TRINITY_TASKSET_PATH,openai/gsm8k}
       subset_name: 'main'
       split: 'train'
       format:
@@ -81,7 +84,7 @@ buffer:
     eval_tasksets:
     - name: gsm8k-eval
       storage_type: file
-      path: 'openai/gsm8k'
+      path: ${oc.env:TRINITY_TASKSET_PATH,openai/gsm8k}
       subset_name: 'main'
       split: 'test'
       format:

@@ -549,9 +549,11 @@ window.addEventListener("load", load);
 <li class="toctree-l1"><a class="reference internal" href="develop_algorithm.html">Algorithm 开发指南</a></li>
 <li class="toctree-l1"><a class="reference internal" href="example_mix_algo.html">Algorithm 进阶开发</a></li>
 <li class="toctree-l1"><a class="reference internal" href="develop_operator.html">Operator 开发指南</a></li>
-<li class="toctree-l1"><a class="reference internal" href="develop_selector.html">🧪 实验性功能：任务选择与调度系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop_selector.html">🧪 实验性功能：任务选择器</a></li>
 <li class="toctree-l1"><a class="reference internal" href="trinity_configs.html">参数配置指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trinity_gpu_configs.html">GPU 资源相关配置指南</a></li>
 <li class="toctree-l1"><a class="reference internal" href="synchronizer.html">Synchronizer 介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="align_with_verl.html">与 veRL 对齐训练配置</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">样例</span></p>
 <ul class="nav bd-sidenav">
@@ -565,10 +567,11 @@ window.addEventListener("load", load);
 <li class="toctree-l1"><a class="reference internal" href="example_dpo.html">离线 DPO 和 SFT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="example_megatron.html">Megatron-LM 支持</a></li>
 <li class="toctree-l1"><a class="reference internal" href="example_data_functionalities.html">数据处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_dataset_perspective.html">样例总览</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">常见问题</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="faq.html">常见问题</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">常见问题（FAQ）</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="nav bd-sidenav">
@@ -620,6 +623,7 @@ window.addEventListener("load", load);
 <li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.buffer.buffer_writer.html">trinity.buffer.buffer_writer module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.buffer.task_scheduler.html">trinity.buffer.task_scheduler module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.buffer.utils.html">trinity.buffer.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.buffer.viewer.html">trinity.buffer.viewer module</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../build_api/trinity.explorer.html">trinity.explorer package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -682,6 +686,7 @@ window.addEventListener("load", load);
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.algorithm.policy_loss_fn.policy_loss_fn.html">trinity.algorithm.policy_loss_fn.policy_loss_fn module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.algorithm.policy_loss_fn.ppo_policy_loss.html">trinity.algorithm.policy_loss_fn.ppo_policy_loss module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.algorithm.policy_loss_fn.rec_policy_loss.html">trinity.algorithm.policy_loss_fn.rec_policy_loss module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.algorithm.policy_loss_fn.sapo_policy_loss.html">trinity.algorithm.policy_loss_fn.sapo_policy_loss module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.algorithm.policy_loss_fn.sft_loss.html">trinity.algorithm.policy_loss_fn.sft_loss module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.algorithm.policy_loss_fn.sppo_loss_fn.html">trinity.algorithm.policy_loss_fn.sppo_loss_fn module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.algorithm.policy_loss_fn.topr_policy_loss.html">trinity.algorithm.policy_loss_fn.topr_policy_loss module</a></li>
@@ -728,9 +733,12 @@ window.addEventListener("load", load);
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.rewards.agents_reward.html">trinity.common.rewards.agents_reward module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.rewards.countdown_reward.html">trinity.common.rewards.countdown_reward module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.rewards.dapo_reward.html">trinity.common.rewards.dapo_reward module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.rewards.eval_utils.html">trinity.common.rewards.eval_utils module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.rewards.format_reward.html">trinity.common.rewards.format_reward module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.rewards.human_reward.html">trinity.common.rewards.human_reward module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.rewards.math_reward.html">trinity.common.rewards.math_reward module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.rewards.naive_dapo_score.html">trinity.common.rewards.naive_dapo_score module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.rewards.qwen25_eval.html">trinity.common.rewards.qwen25_eval module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.rewards.reward_fn.html">trinity.common.rewards.reward_fn module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.rewards.tool_reward.html">trinity.common.rewards.tool_reward module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../build_api/trinity.common.rewards.utils.html">trinity.common.rewards.utils module</a></li>
@@ -761,10 +769,8 @@ window.addEventListener("load", load);
 <li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.utils.annotations.html">trinity.utils.annotations module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.utils.distributed.html">trinity.utils.distributed module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.utils.dlc_utils.html">trinity.utils.dlc_utils module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.utils.eval_utils.html">trinity.utils.eval_utils module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.utils.log.html">trinity.utils.log module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.utils.lora_utils.html">trinity.utils.lora_utils module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.utils.math_eval_utils.html">trinity.utils.math_eval_utils module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.utils.monitor.html">trinity.utils.monitor module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.utils.plugin_loader.html">trinity.utils.plugin_loader module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../build_api/trinity.utils.registry.html">trinity.utils.registry module</a></li>
@@ -850,6 +856,21 @@ window.addEventListener("load", load);
 
 
 <div class="article-header-buttons">
+
+
+<a href="https://github.com/modelscope/Trinity-RFT" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="源码库"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
 
 
 
@@ -1451,22 +1472,29 @@ document.write(`
 <pre  class="mermaid">
         flowchart LR
     A[启动推理模型] --&gt; B[调试 Workflow]
-    B --&gt; B
+    B --&gt; C[检查 Experience]
+    C --&gt; B
     </pre><p>启动推理模型的命令如下：</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>trinity<span class="w"> </span>debug<span class="w"> </span>--config<span class="w"> </span>&lt;config_file_path&gt;<span class="w"> </span>--module<span class="w"> </span>inference_model
 </pre></div>
 </div>
 <p>其中，<code class="docutils literal notranslate"><span class="pre">config_file_path</span></code> 为 YAML 格式的配置文件路径，格式与 <code class="docutils literal notranslate"><span class="pre">trinity</span> <span class="pre">run</span></code> 命令所用配置文件一致。配置文件中的 <code class="docutils literal notranslate"><span class="pre">explorer.rollout_model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">explorer.auxiliary_models</span></code> 字段会被加载，用于初始化推理模型。</p>
 <p>模型启动后会持续运行并等待调试指令，不会自动退出。此时，你可在另一个终端执行如下命令进行 Workflow 调试：</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>trinity<span class="w"> </span>debug<span class="w"> </span>--config<span class="w"> </span>&lt;config_file_path&gt;<span class="w"> </span>--module<span class="w"> </span>workflow<span class="w"> </span>--output-file<span class="w"> </span>&lt;output_file_path&gt;<span class="w"> </span>--plugin-dir<span class="w"> </span>&lt;plugin_dir&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>trinity<span class="w"> </span>debug<span class="w"> </span>--config<span class="w"> </span>&lt;config_file_path&gt;<span class="w"> </span>--module<span class="w"> </span>workflow<span class="w"> </span>--output-dir<span class="w"> </span>&lt;output_dir&gt;<span class="w"> </span><span class="o">[</span>--plugin-dir<span class="w"> </span>&lt;plugin_dir&gt;<span class="o">]</span><span class="w"> </span><span class="o">[</span>--enable-profiling<span class="o">]</span><span class="w"> </span><span class="o">[</span>--disable-overwrite<span class="o">]</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">config_file_path</span></code>：YAML 配置文件路径，通常与启动推理模型时使用的配置文件相同。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">output_file_path</span></code>：性能分析结果输出路径。调试模式会使用 <a class="reference external" href="https://github.com/gaogaotiantian/viztracer">viztracer</a> 对 Workflow 运行过程进行性能分析，并将结果保存为 HTML 文件，便于在浏览器中查看。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">plugin_dir</span></code>（可选）：插件目录路径。如果你的 Workflow 或奖励函数等模块未内置于 Trinity-RFT，可通过该参数加载自定义模块。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;config_file_path&gt;</span></code>：YAML 配置文件路径，通常与启动推理模型时使用的配置文件相同。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;output_dir&gt;</span></code>：调试输出保存目录。如果未指定，调试输出将保存在当前工作目录下的 <code class="docutils literal notranslate"><span class="pre">debug_output</span></code> 目录中。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;plugin_dir&gt;</span></code>（可选）：插件目录路径。如果你的 Workflow 或奖励函数等模块未内置于 Trinity-RFT，可通过该参数加载自定义模块。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--enable-profiling</span></code>（可选）：启用性能分析，使用 <a class="reference external" href="https://github.com/gaogaotiantian/viztracer">viztracer</a> 对 Workflow 运行过程进行性能分析。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--disable-overwrite</span></code>（可选）：禁用输出目录覆盖功能。如果指定的文件夹非空，程序将自动创建一个带有时间戳后缀的新目录（例如 <code class="docutils literal notranslate"><span class="pre">debug_output_20251203211200</span></code>）以避免覆盖现有数据。</p></li>
 </ul>
-<p>调试过程中，配置文件中的 <code class="docutils literal notranslate"><span class="pre">buffer.explorer_input.taskset</span></code> 字段会被加载，用于初始化 Workflow 所需的任务数据集和实例。需注意，调试模式仅会读取数据集中的第一条数据进行测试。运行上述命令后，Workflow 的返回值会自动格式化并打印在终端，方便查看运行结果。</p>
+<p>调试过程中，配置文件中的 <code class="docutils literal notranslate"><span class="pre">buffer.explorer_input.taskset</span></code> 字段会被加载，用于初始化 Workflow 所需的任务数据集和实例。需注意，调试模式仅会读取数据集中的第一条数据进行测试。运行上述命令后，工作流的返回 Experience 会被写入指定输出目录下的 <code class="docutils literal notranslate"><span class="pre">experiences.db</span></code> 文件中，而运行过程中记录的指标会打印在终端以便检查。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>trinity<span class="w"> </span>debug<span class="w"> </span>--config<span class="w"> </span>&lt;config_file_path&gt;<span class="w"> </span>--module<span class="w"> </span>viewer<span class="w"> </span>--output-dir<span class="w"> </span>&lt;output_dir&gt;<span class="w"> </span>--port<span class="w"> </span><span class="m">8502</span>
+</pre></div>
+</div>
+<p>该命令会在 <code class="docutils literal notranslate"><span class="pre">http://localhost:8502</span></code> 启动 Experience Viewer，用于可视化调试过程中生成的 Experience。你可以在用户友好的界面中检查生成的 Experience。需注意，Viewer 会从指定输出目录下的 <code class="docutils literal notranslate"><span class="pre">experiences.db</span></code> 文件中读取 Experience，因此请确保你已成功运行过 Workflow 调试命令，且替换 <code class="docutils literal notranslate"><span class="pre">&lt;output_dir&gt;</span></code> 为实际的输出目录。</p>
 <p>调试完成后，可在推理模型终端输入 <code class="docutils literal notranslate"><span class="pre">Ctrl+C</span></code> 以终止模型运行。</p>
 </section>
 </section>
